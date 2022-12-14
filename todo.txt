@@ -1,0 +1,695 @@
+2시 또는 3시까지 상품 카테고리 세팅해서 주면 
+그거가지고 api endPoint 바꾸기
+
+nudgeCash 내일 바꾸기 
+서버 올리면 결제빼고 ui 보는 용도로
+
+appenv nodeenv영향을 받는게 무엇인지.... 
+
+
+
+
+페이지마다 헤드, 집어 넣기 seo? 그런데익너 안될듯.... 아니다 상품에 대한것은 가능
+
+수정 사항
+- 인피니티스크롤 두번씩 호출됨
+증상
+- sort 변경시 두번 호출
+- sub category 변경시 두번 호출 -> 이거는 간헐적
+- 스크롤시 두번 호출
+
+{
+  그런데,onEndReached가 두번 호출되는것은 아님
+  refetchOnWindowFocus 를 false로 하여도 두번씩 호출됨
+  
+}
+
+
+
+- 처음 들어갔을때, 브랜드 로고 스와이퍼 보이지 않는것
+
+
+현재 규칙
+- 장바구니가 없기에, 한가지 상품에 대해 옵션만 여러개 구입 가능 
+
+남은것중 생각나는것
+- 배송비
+- 주문 완료후 세션 orderList 삭제 하는지 확인
+
+
+Readme
+임시 작성(추후 아래와같이 변경할것)
+components : 공통 사용 컴포넌트
+
+pages/_comps : 해당 페이지에서 사용
+
+같은 컴포넌트지만 필요에의해 2개 생성한것들은 -> 컴포넌트 이름을 달리한다.
+컴포넌트를 합치지 않는 기준 : 너무 많은 분기를 할경우?
+
+
+
+@선택과 집중
+    큰 틀에서 작업해야하는것이지만(다른것에 종속될수있음), 없어도 문제 없는것들은 작업 우선 순위를 뒤로 미룬다
+    
+    중요 기능 부터 작업한다
+    - 로그인
+    - 결제
+    - 전체 ui
+    - 페이지 이동
+
+    중요 기능중 가장 먼저 할것은 UI 그리기!     
+
+{
+  {
+    {
+      {
+        {
+          {
+            @@@@남은것@@@@
+            교환,환불,반품,취소
+            전체 컬러 테마 적용
+            폰트적용
+          }
+        }
+      }
+    }
+  }
+}
+ 
+
+@TODO
+- 메인 카테고리탭 mappingUrl처리
+- defaultdata cartList 작업 -> 마이페이지 작업하고 추가
+- 미인증 페이지 이동시 페이지 이동 기록 삭제
+- token 만료 받을시 usercontext isLogin false로 변경하여 layout에서 이 값을 참조하여 레이아웃 보이지 않도록 한다.
+- 새로 탭을 켜서 특정 페이지로 이동시, 막아야하는지, 만약 막는다면, 어떻게할지
+- Router.push , Link 상황에맞춰 적용하도록 하기
+
+
+
+- 구매하기 하단 팝업
+{
+  - orderList는 sessionStorage에 저장한다
+  - 페이코인은 옵션 다른 상품 선택 불가.
+  - 휴샵은 가능 
+  - 휴샵처럼 하려면 페이코인 유아이를 바꿔야함.
+  - 하단에 총상품 가격을 추가한다 -> 휴샵 ui와 공유
+
+  - 하위 옵션이 없어도 무조건 나와야함
+    -> 상품 개수를 선택할수  잇어야함
+
+  - 상품 주고 받을 타입 맞추기
+      -> 내부적으로 사용할 데이터, 
+      -> 실제 구매 페이지로 넘어가기전 세션에 저장할 데이터
+    
+  - 품절된 상품 표시 옵션 셀렉터에 표시할것
+  - 남은 재고에따라 상품 추가 버튼 막기 
+
+  @@UI
+  - 총 상품 금액은 하단에 고정시키고, 그위에서 스크롤 되도록 만들기 
+}
+
+
+- 전체로딩
+{
+    #components/Layout/index.tsx - setLoading 관련
+    - 추후 loading context 사용
+    - import { useLoading } from 'contexts/loading';
+    - const setLoading = useLoading();
+    ---> app.page.tsx에서 데이터 패치 상태일때 로딩 하는것 추가하기
+}
+- 전체 alert
+{
+    - 전체 alert context 추가하여 alertDialog 만들기 / 또는 기본 alert 사용하기
+
+    alert 사용법
+
+    import { useContext as useConfirmContext } from 'contexts/confirm';
+    const [, confirmActions] = useConfirmContext();
+
+    alert 외부를 누를경운 아무 작업도 하지 않음
+
+    방법1 
+        confirmActions
+      .open('제목', '내용?', ['버튼이름1', '버튼이름2'])
+      .then(async (answer) => {
+        // 위의 버튼 클릭후 클릭한 버튼 이름을 return
+        // 그리고 아래 작업을 마친후 alert를 종료한다.
+        if (answer === '버튼이름1') {
+          // 작업 진행
+        }
+        if (answer === '버튼이름2') {
+          // 작업 진행
+        }
+      });
+
+    방법2
+    confirmActions.open('제목'); -> 제목만 노출 , 디폴드 버튼은 확인
+    confirmActions.open('제목', '내용'); -> 제목 내용 노출 , 디폴드 버튼은 확인
+
+    방법3 버튼을 넣지 않았지만, 기본이 확인이기때문에 이후 버튼 분기 가능
+     confirmActions.open('제목', '내용?').then(async (answer) => {
+      // 위의 버튼 클릭후 클릭한 버튼 이름을 return
+      // 그리고 아래 작업을 마친후 alert를 종료한다.
+      if (answer === '확인') {
+        // 작업 진행
+        alert('확인 눌렀을때');
+      }
+      if (answer === '확인0') {
+        // 작업 진행
+        alert('확인 눌렀을때');
+      }
+    });
+}
+
+- 컴포넌트 이름, 타입 이름 바꾸기
+{
+    대분류 탭 : HOME, 캠핑, 자전거 .... 
+    -> MainCategoryTab / type : MainCategory
+
+    소분류 탭 : 자전거 전체보기, 자전거, 용품/부품 ..... 
+    -> SubCategoryTab / type : SubCategory
+}
+
+- 인피니트 스크롤 헤더컴포넌트 추가하여, 검색필터(신규, 최저가 등) 와 총 상품 개수를 추가한다. 
+    --> 그런데 컴포넌트 자체를 프롭스로 넘겨줄시 해당 컴포넌트의 프롭스를 또 추가하여야하니, 그냥 인피니티 컴포넌트 안에 컴포넌트를 고정시키고 프롭스를 추가한다.
+    --> 이 컴포넌트를 검색 페이지에서 재활용함
+
+- 프로젝트 구조
+{
+    컴포넌트는 가급적 페이지에 종속되지 않도록 만든다
+    -> 페이지 종속 컴포넌트는, 페이지스 폴더 하위에 _comps폴더를 생성하여 사용한다.
+    -> 이는 필수는 아니지만, 해당 프로젝트에서는 위와 같은 규칙을 가급적 따르도록 할것.
+
+    컴포넌트 이름
+    -> Menu - Panel 
+    -> Category 등 규칙을 가지고 통일 할것
+}
+
+
+마이페이지
+{
+    배송지
+    - 배송지 수정은 휴샵에 없어서 버튼 없애고 ui 생성
+    - 배송지 체크는 만들지 않는다. 선택 주소록 삭제가 페이코인에 없으니 
+    - 수정/ 기본배송지 등록시 배송지 타이틀에 기본 배송지가 부착됨
+    - 기본 배송지 삭제시 다른것이 기본 배송지로 되지는 않음. 삭제 클릭할경우 alert나오고 바로 삭제
+
+
+
+    @@@@@@@@@주문 취소, 교환, 반품도 있음!!!!!!!!!!!!!!!
+
+}
+
+배송지
+{
+    -기본 배송지로 선택되면 결제페이지에서 배송지가 보인다. 추가로 배송지 변경 하단 드로워가 있음
+}
+
+주문
+{
+    페이코인 -> 장바구니 없음
+    휴샵 -> 장바구니 잇음  
+
+    페이코인 -> 한개의 상품에대해 여러개 구매 가능
+    휴샵 -> 여러개의 상품을 여러개 구매 가능 
+
+    휴샵 api를 사용하기떄문에, 여러개를 기준으로 api가 세팅되어있음
+        -> 그렇기때문에 배열로 받으면 첫번째 것을 사용하는게 당연함
+
+}
+
+로딩
+{-> 추후 일괄 적용
+    데이터 조회시 isLoading을 참조하여 app.page.tsx에 있는 컨텍스트를 업데이트한다
+    - context 로딩상테일시 전역 프로그레스 다이얼로그 표시
+    
+}
+
+
+
+#API 수정 요청
+/api/mypage/orderList
+{
+    endDate:2022-11-17  -> 없으면 오늘날짜로 -> 근데이건 프론트에서 추가 가능 
+    searchType: cancel/order    -> 예를들으 all 이라는게있어야함 , 또는 빈값일때 전부 주는
+    startDate:2020-01-01 -> 이것도 엔드데이트와 마찬가지
+}
+
+
+@FINISH
+- 상품 리스트 페이지 상단 subCateogry 링크 이동 추가 / 11월11일
+
+
+
+
+
+
+@@결제
+
+funnc
+{
+
+  inicisForm.js 세팅
+  
+  구매하기 버튼 클릭
+
+  onClickPayment  
+  {
+
+    위에는 다른처리
+    마지막에 pc와 모바일에 따라서 api 요청 ua로 분기
+
+    INICIS_FORM_ID 라는것을 세팅해줌 : INICIS_FORM
+
+    이때 baseparams: -> 이는 fnc에서만 사용하는데이터(ordersheet:,orderId)
+        const baseParams = {
+      data: paymentFormData,
+      vars: {
+        orderId: orderSheet.orderId,
+      },
+    };
+
+
+
+  }
+
+}
+
+hue
+
+11월 28일
+결제
+ - 모바일부터 결제를 성공시키고 pc를 한다.
+ - 
+
+
+----------
+pc 
+- iframe
+- 이것도 일단 iframe으로 띄어보기
+
+mobile
+- 그냥함.
+- 그렇지만 return이랑 그 url을 따로 세팅해주어야함. /property?
+
+
+
+소스 임시 저장
+/* global INIStdPay */
+import React, { useState, useMemo, useEffect } from 'react';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { Box, Typography, ButtonBase } from '@mui/material';
+import { isMobile } from 'react-device-detect';
+import { useContext as useConfirmContext } from 'contexts/confirm';
+import FoldingSection from 'components/FoldingSection';
+import { useGetOrderListTmp, useGetOrderUpdate } from 'apis/index';
+import {
+  OrderList as OrderListType,
+  OrderSheet as OrderSheetType,
+  StoreKey,
+} from 'types';
+import IframeResizer from 'iframe-resizer-react';
+import isEmptyString from 'libs/isEmptyString';
+import AddressMemo from 'components/AddressMemo';
+import OrderItem from './_comps/OrderItem';
+import Payment from './_comps/Payment';
+import TextField from 'components/TextField';
+import AddressModal from './_comps/AddressModal';
+import AddressItem from './_comps/AddressItem';
+import { styles } from './styles';
+import PaymentMethod from './_comps/PaymentMethod';
+import Agree from './_comps/Agree';
+
+// TODO:  session get -> empty array -> main replace
+// TODO:  배송비 데이터 뭔지 찾아서 추가하기
+/**
+ * 남은작업
+ * -!! 최초 배송지가 없을경우 배송지 추가하기로 나오도록 하기
+ * - 배송비 추가
+ * - validation check -> 추가로 휴대폰 번호 적합성 다른데도 추가하기
+ * - 구매하기 api 테스트하기
+ * - 비정상 접근시 main으로 보내기
+ *
+ * @@UI 시간 남으면
+ * - 이거 클릭후 호버컬러 되는거 전부 지우기
+ */
+const Order = () => {
+  const router = useRouter();
+  const [, confirmActions] = useConfirmContext();
+  const [orderList, setOrderList] = useState<OrderListType[]>([]);
+  const [memSeq, setMemSeq] = useState('');
+  const [orderSeq, setOrderSeq] = useState(0);
+  const [ordererEmail, setOrdererEmail] = useState('');
+  const [ordererName, setOrdererName] = useState('');
+  const [ordererPhone, setOrdererPhone] = useState('');
+  const [address, setAddress] = useState<any>(null);
+  const [addressMemo, setAddressMemo] = useState('');
+  const [openAddressModal, setOpenAddressModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('0001');
+  const [agree, setAgree] = useState(false);
+
+  const handleAgreeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAgree(event.target.checked);
+  };
+
+  // 주문 정보 임시저장 api
+  const { data: orderListTmpData, isSuccess: orderListTmpIsSuccess } =
+    useGetOrderListTmp(orderList);
+
+  // orderList 세팅
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const sessionOrderList: OrderListType[] = JSON.parse(
+        sessionStorage.getItem(StoreKey.ORDERLIST) || '[]'
+      );
+      setOrderList(sessionOrderList);
+    }
+  }, []);
+
+  // 주문 정보 임시저장 api 성공후 / 주문자 정보 세팅
+  useEffect(() => {
+    if (orderListTmpData && orderListTmpIsSuccess) {
+      setOrdererName(orderListTmpData.result.params.memNm || '');
+      setOrdererPhone(orderListTmpData.result.params.memHpNo || '');
+      setMemSeq(orderListTmpData.result.params.memSeq || '');
+      setOrderSeq(orderListTmpData.result.params.orderSeq || 0);
+      setOrdererEmail(orderListTmpData.result.params.memEmail || '');
+    }
+  }, [orderListTmpData]);
+
+  // 최종 구매금액, 총상품수량:옵션개수
+  const { finalPrice, totalCount } = useMemo(() => {
+    if (orderList.length > 0) {
+      const priceSum = orderList.reduce((acc: any, cur) => {
+        const a = Number(acc);
+        const b = Number(
+          cur.goodsOpt.goodsOrderCnt * (cur.goodsOpt.goodsSellAmt || 0)
+        );
+        return a + b;
+      }, 0);
+      return { finalPrice: priceSum, totalCount: orderList.length };
+    }
+    return { finalPrice: 0, totalCount: 0 };
+  }, [orderList]);
+
+  const orderGoodsName = useMemo(() => {
+    if (orderList.length > 0) {
+      const name = orderList[0].goodsInfo?.goodsNm;
+      let plusName = '';
+      if (orderList.length > 1) {
+        plusName = ` 택1외 ${orderList.length - 1}건`;
+      }
+      return name + plusName;
+    }
+
+    return '';
+  }, [orderList]);
+
+  const orderSheet: OrderSheetType = {
+    memSeq,
+    orderSeq,
+    ordererEmail,
+    orderTotalAmt: finalPrice,
+    orderPayCd: paymentMethod,
+    orderGoodsNm: orderGoodsName,
+    isOrdererHp: 'Y',
+    deviceType: !isMobile ? '1' : '2',
+    ordererNm: ordererName,
+    ordererHp: ordererPhone,
+    rcverNm: (address && address.rcverNm) || '',
+    rcverHp: (address && address.rcverHp) || '',
+    rcvPost: (address && address.rcvPost) || '',
+    rcvAddr: (address && address.rcvAddr) || '',
+    rcvAddrDetail: (address && address.rcvAddrDetail) || '',
+    rcvAddrCode: (address && address.rcvAddrCode) || '',
+    dlvAddrSeq: (address && address.dlvAddrSeq) || 0,
+    basicYn: (address && address.basicYn) || 'N',
+    orderDlvMsg: addressMemo,
+    // FIXME: point : 일단 전부 빈값으로 세팅
+    orderUsePoint: 0,
+    pointCnl: '',
+    encId: '',
+    encPwd: '',
+    siteCode: '',
+  };
+
+  const checkOrderSheet = () => {
+    if (isEmptyString(ordererName)) {
+      confirmActions.open('알림', '주문자 이름을 입력해주세요.');
+      return false;
+    }
+    if (isEmptyString(ordererPhone)) {
+      confirmActions.open('알림', '주문자 휴대번호를 입력해주세요.');
+      return false;
+    }
+    if (isEmptyString(addressMemo)) {
+      confirmActions.open('알림', '배송 요청사항을 입력해주세요.');
+      return false;
+    }
+    if (isEmptyString(paymentMethod)) {
+      confirmActions.open('알림', '결제수단을 선택해주세요.');
+      return false;
+    }
+    if (!agree) {
+      confirmActions.open('알림', '주문 내용을 확인해주세요.');
+      return false;
+    }
+    return true;
+  };
+
+  // 구매 api
+  const {
+    data: orderUpdateData,
+    isSuccess: orderUpdateIsSuccess,
+    refetch: orderUpdateRefetch,
+  } = useGetOrderUpdate(orderSheet);
+
+  // const { data, isSuccess, refetch } = useGetTest(aa);
+  // useEffect(() => {
+  //   if (data && isSuccess) {
+  //     console.log('결제:data : : ', data);
+  //   }
+  // }, [data, isSuccess]);
+
+  useEffect(() => {
+    if (orderUpdateData && orderUpdateIsSuccess) {
+      console.log('결제-orderUpdateDate:', orderUpdateData);
+      // 정상 처리
+      if (orderUpdateData.result.resultCode === '0000') {
+        console.log('결제-resultCode=0000');
+        let url =
+          process.env.NEXT_PUBLIC_BACKEND_API + '/api/payment/iniPayCall';
+        console.log('결제-url: ', url);
+
+        type ObjType = {
+          [index: string]: string;
+        };
+        const params: ObjType = {
+          orderSeq: String(orderSheet.orderSeq),
+          totalAmt: String(orderSheet.orderTotalAmt),
+          paymentAmt: String(orderSheet.orderTotalAmt),
+          goodsNm: orderSheet.orderGoodsNm,
+          ordererNm: orderSheet.ordererNm,
+          ordererHp: orderSheet.isOrdererHp,
+          ordererEmail: ordererEmail,
+          goodsTexFreeAmt: '0',
+          orderPayCd: '0001',
+          usePoint: '0',
+          isMobile: isMobile ? 'Y' : 'N',
+          custmrId: 'hue',
+        };
+
+        const form = document.createElement('form');
+        form.method = 'post';
+        form.acceptCharset = 'utf-8';
+        form.hidden = true;
+        form.id = 'INICIS_FORM';
+        if (isMobile) form.action = url;
+
+        for (const o in params) {
+          const input = document.createElement('input');
+          input.name = o;
+          input.value = params[o];
+          input.hidden = true;
+          form.appendChild(input);
+        }
+
+        const input = document.createElement('input');
+        input.name = 'mkey';
+        input.value =
+          '3a9503069192f207491d4b19bd743fc249a761ed94246c8c42fed06c3cd15a33';
+        input.hidden = true;
+        form.appendChild(input);
+
+        const input2 = document.createElement('input');
+        input2.name = 'mid';
+        input2.value = 'INIpayTest';
+        input2.hidden = true;
+        form.appendChild(input2);
+
+        const input3 = document.createElement('input');
+        input3.name = 'oid';
+        input3.value = 'null';
+        input3.hidden = true;
+        form.appendChild(input3);
+
+        const input4 = document.createElement('input');
+        input4.name = 'price';
+        input4.value = 'null';
+        input4.hidden = true;
+        form.appendChild(input4);
+
+        const input5 = document.createElement('input');
+        input5.name = 'payViewType';
+        input5.value = 'popup';
+        input5.hidden = true;
+        form.appendChild(input5);
+
+        const input6 = document.createElement('input');
+        input6.name = 'popupUrl';
+        input6.value = 'https://manual.inicis.com/pay/stdpay_pc.html#popup_46';
+        input6.hidden = true;
+        form.appendChild(input6);
+
+        document?.querySelector('#INICIS_FORM_ROOT')?.appendChild(form);
+
+        if (isMobile) {
+          form.submit();
+        } else {
+          // INIStdPay.pay('INICIS_FORM');
+        }
+
+        // } else {
+        //   console.log('결제- pc일때');
+        // }
+      }
+    }
+  }, [orderUpdateData]);
+
+  return (
+    orderList &&
+    orderList.length > 0 && (
+      <div id="INICIS_FORM_ROOT">
+        <Box sx={styles.root}>
+          <Box sx={styles.headerRoot}>
+            <Typography sx={styles.headerTxt}>주문 • 결제</Typography>
+          </Box>
+
+          <FoldingSection
+            title="주문 상품"
+            isFolding={totalCount > 3}
+            customLabel={
+              <Box sx={styles.orderFoldingSectionLabelRoot}>
+                <Box sx={styles.orderFoldingSectionLabel}>주문 상품</Box>
+                <Box sx={styles.orderFoldingSectionCount}>{totalCount}개</Box>
+              </Box>
+            }
+          >
+            {orderList.map((item, index) => {
+              return <OrderItem key={index} data={item} />;
+            })}
+          </FoldingSection>
+
+          <FoldingSection title="주문자 정보">
+            <Box sx={styles.ordererFoldingSectionRoot}>
+              <Box>
+                <TextField
+                  placeholder={'주문자 성함을 입력해주세요'}
+                  value={ordererName}
+                  onChange={setOrdererName}
+                  isRequired
+                  label={'이름'}
+                />
+              </Box>
+              <Box sx={styles.ordererFoldingSectionPhoneRoot}>
+                <TextField
+                  placeholder={'"-"없이 번호만 입력해주세요'}
+                  value={ordererPhone}
+                  onChange={setOrdererPhone}
+                  isRequired
+                  label={'휴대전화'}
+                />
+              </Box>
+            </Box>
+          </FoldingSection>
+
+          <FoldingSection title="배송지">
+            <Box>
+              {address && (
+                <Box>
+                  <AddressItem data={address} />
+                  <AddressMemo
+                    addressMemo={addressMemo}
+                    setAddressMemo={setAddressMemo}
+                  />
+                </Box>
+              )}
+
+              <Box sx={styles.submitAddressRoot}>
+                <Box
+                  sx={styles.submitAddressBtnRoot}
+                  onClick={() => {
+                    setOpenAddressModal(true);
+                  }}
+                >
+                  <Typography sx={styles.submitAddressTxt}>
+                    {address ? '배송지 변경' : '배송지 추가'}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <AddressModal
+                open={openAddressModal}
+                onClose={() => {
+                  setOpenAddressModal(false);
+                }}
+                address={address}
+                setAddress={(value) => setAddress(value)}
+              />
+            </Box>
+          </FoldingSection>
+
+          <FoldingSection title="결제 정보">
+            <Payment finalPrice={finalPrice} deliveryFee={0} />
+          </FoldingSection>
+
+          <FoldingSection title="결제 수단">
+            <PaymentMethod value={paymentMethod} onChange={setPaymentMethod} />
+          </FoldingSection>
+
+          <Box sx={styles.agreeRoot}>
+            <Agree value={agree} onChange={handleAgreeChange} />
+          </Box>
+
+          <ButtonBase
+            onClick={() => {
+              console.log('orderSheet : ', orderSheet);
+              // if (checkOrderSheet()) {
+              //   console.log('Validation Success');
+              //   // api 호출
+              //   // orderUpdateRefetch();
+              // }
+              orderUpdateRefetch();
+              setTimeout(() => {
+                INIStdPay.pay('INICIS_FORM');
+              }, 3000);
+            }}
+            sx={styles.buyBtn}
+          >
+            <Box>구매하기</Box>
+          </ButtonBase>
+          <IframeResizer
+            src={'http://localhost:7070/api/payment/iniPayCall'}
+            heightCalculationMethod="bodyScroll"
+            autoResize
+            style={{ width: '1px', minWidth: '100%', border: '0 none' }}
+          />
+        </Box>
+      </div>
+    )
+  );
+};
+
+export default Order;
