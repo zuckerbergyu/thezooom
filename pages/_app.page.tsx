@@ -72,7 +72,7 @@ const useUser = () => {
 
             // FIXME:임시로 세팅
             // const param = { memId, custmrId };
-            const param = { memId: 'hue', custmrId: 'testUser' };
+            const param = { memId: 'testUser', custmrId: 'hue' };
 
             // 인증 정보 조회
             const { data } = await getLogin(param);
