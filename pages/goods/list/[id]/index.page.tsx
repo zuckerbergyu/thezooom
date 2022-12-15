@@ -15,7 +15,7 @@ import { useProductInfiniteList } from 'apis/index';
 import { Category, ProductItem, StoreKey } from 'types/index';
 import { styles } from './styles';
 
-type SubCategoryTabType = Pick<Category, 'catgryCd' | 'catgryNm'>[];
+type SubCategoryTabType = Pick<Category, 'catgryCd' | 'catgryNm' | 'brandCd'>[];
 
 const GoodsList = () => {
   const router = useRouter();
@@ -26,13 +26,19 @@ const GoodsList = () => {
   const [subCategoryList, setSubCategoryList] = useState<SubCategoryTabType>(
     []
   );
+  console.log(subCategoryList);
 
   const categoryCode =
     router.isReady && router.query.id ? Number(router.query.id) : null;
 
+  const brandCode =
+    router.isReady && router.query.brandCd
+      ? Number(router.query.brandCd)
+      : null;
+
   // 상품 리스트 조회 api
-  const { data, fetchNextPage, hasNextPage, isFetching } =
-    useProductInfiniteList(categoryCode, sort);
+  const { data, refetch, fetchNextPage, hasNextPage, isFetching } =
+    useProductInfiniteList(categoryCode, brandCode, sort);
 
   // 서브 카테고리 처리
   useEffect(() => {
@@ -41,6 +47,7 @@ const GoodsList = () => {
         sessionStorage.getItem(StoreKey.CATEGORY) || 'null';
       const categoryList =
         (JSON.parse(sessionCategoryList) as Category[]) || [];
+      console.log('categoryList ', categoryList);
 
       const list: SubCategoryTabType = [];
 
@@ -59,9 +66,14 @@ const GoodsList = () => {
           list.push({
             catgryCd: item.catgryCd,
             catgryNm: `${item.catgryNm}`,
+            brandCd: item.brandCd,
           });
           item.child?.map((item) => {
-            list.push({ catgryCd: item.catgryCd, catgryNm: item.catgryNm });
+            list.push({
+              catgryCd: item.catgryCd,
+              catgryNm: item.catgryNm,
+              brandCd: item.brandCd,
+            });
           });
         }
       });
@@ -93,8 +105,8 @@ const GoodsList = () => {
   }, [productList]);
 
   // 서브 카테고리 클릭시 라우터 쿼리 변경
-  const handleCategoryClick = (code?: string) => {
-    router.push(`/goods/list/${code}`);
+  const handleCategoryClick = (code?: string, brandCode?: string) => {
+    router.push(`/goods/list/${code}?brandCd=${brandCode}`);
   };
 
   const breadCrumbList = useMemo(() => {
@@ -134,7 +146,7 @@ const GoodsList = () => {
       {subCategoryList && subCategoryList.length > 0 && (
         <Box sx={styles.brandSubCategoryTabRoot}>
           <BrandSubCategoryTab
-            onClick={(code) => handleCategoryClick(code)}
+            onClick={(code, brandCode) => handleCategoryClick(code, brandCode)}
             data={subCategoryList}
           />
         </Box>

@@ -4,11 +4,12 @@ import { styles } from './styles';
 type Props = {
   value?: string;
   path: string;
+  brandPath: string;
   name: string;
-  onClick?: (code?: string) => void;
+  onClick?: (code?: string, brandCode?: string) => void;
 };
 const TabItem = (props: Props) => {
-  const { value, path, name, onClick, ...rest } = props;
+  const { value, path, brandPath, name, onClick, ...rest } = props;
 
   return (
     <Tab
@@ -16,7 +17,7 @@ const TabItem = (props: Props) => {
       component="a"
       disableRipple
       sx={styles.root}
-      onClick={() => onClick?.(path)}
+      onClick={() => onClick?.(path, brandPath)}
       label={name}
       {...rest}
     />

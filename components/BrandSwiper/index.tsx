@@ -10,7 +10,7 @@ import 'swiper/css';
 
 type Props = {
   sx?: SxProps;
-  onClick?: (path: string) => void;
+  onClick?: (path: string, brandPath: string) => void;
   data: any[];
 };
 const COLUMN_CNT = 3;
@@ -19,11 +19,11 @@ const BrandSwiper = (props: Props) => {
   const [activeStep, setActiveStep] = useState(0);
 
   const dataLength = (props.data && props.data.length) || 0;
-  // const slideArray =
-  // (props.data && (sliceArray(props.data, COLUMN_CNT) as any[])) || [];
+  const slideArray =
+    (props.data && (sliceArray(props.data, COLUMN_CNT) as any[])) || [];
 
   // FIXME: 임시
-  const slideArray = temp;
+  // const slideArray = temp;
   // const dataLength = 18;
 
   const totalStep = useMemo(() => {

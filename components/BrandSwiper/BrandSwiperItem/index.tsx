@@ -7,7 +7,7 @@ import { styles } from './styles';
 type Props = {
   sx?: SxProps;
   data: any[];
-  onClick?: (path: string) => void;
+  onClick?: (path: string, brandPath: string) => void;
 };
 const BrandSwiperItem = (props: Props) => {
   console.log('BrandSwiperItem : ', props.data);
@@ -18,21 +18,14 @@ const BrandSwiperItem = (props: Props) => {
         <ButtonBase
           key={index}
           sx={styles.btnRoot}
-          onClick={() => props.onClick && props.onClick(item.catgryPathCd)}
+          onClick={() =>
+            props.onClick && props.onClick(item.catgryPathCd, item.brandCd)
+          }
         >
           <Image
             alt={item.name}
             css={styles.img}
-            src={item.imgPath}
-            // src={
-            //   index % 3 === 0
-            //     ? 'https://paycoin.thezooom.kr/goods/brand_thumnail_view/20210621164930'
-            //     : index % 3 === 1
-            //     ? 'https://paycoin.thezooom.kr/goods/brand_thumnail_view/20210621163920'
-            //     : index % 3 === 2
-            //     ? 'https://paycoin.thezooom.kr/goods/brand_thumnail_view/20210621165245'
-            //     : null
-            // }
+            src={item.brandImg}
             layout="fill"
           />
         </ButtonBase>

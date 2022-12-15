@@ -21,17 +21,19 @@ const CheckAuth = () => {
   const [pw, setPw] = useState('');
 
   const nextPath = router.isReady && router.query.pid ? router.query.pid : null;
+  const nextBrandPath =
+    router.isReady && router.query.brandCd ? router.query.brandCd : null;
 
   // id,pw 체크
   const checkFormState = (state: any) => {
     if (isEmptyString(state.id)) {
-      confirmActions.open('알림', '아이디를 입력해 주세요.');
+      confirmActions.open('알림', '휴대번호를 입력해 주세요.');
       return false;
     }
-    if (isEmptyString(state.pw)) {
-      confirmActions.open('알림', '비밀번호를 입력해 주세요.');
-      return false;
-    }
+    // if (isEmptyString(state.pw)) {
+    //   confirmActions.open('알림', '비밀번호를 입력해 주세요.');
+    //   return false;
+    // }
     return true;
   };
 
@@ -39,17 +41,17 @@ const CheckAuth = () => {
     <Box sx={styles.root}>
       <Box sx={styles.areaRoot}>
         <Box sx={styles.titleRoot}>
-          <Typography sx={styles.titleTxt}>@@@ 로그인</Typography>
+          <Typography sx={styles.titleTxt}>2단계인증</Typography>
         </Box>
         <Box sx={styles.textFieldRoot}>
           <TextField
-            placeholder={'아이디를 입력해주세요'}
-            label="아이디"
+            placeholder={'휴대번호 입력해주세요'}
+            label="휴대번호"
             value={id}
             onChange={setId}
           />
         </Box>
-        <Box>
+        {/* <Box>
           <TextField
             placeholder={'비밀번호를 입력해주세요'}
             label="비밀번호"
@@ -57,6 +59,11 @@ const CheckAuth = () => {
             onChange={setPw}
             type="password"
           />
+        </Box> */}
+        <Box sx={{}}>
+          <Typography sx={{ fontSize: '14px' }}>
+            삼성 브랜드 상품은 2단계 인증 이후 구매가 가능합니다.
+          </Typography>
         </Box>
         <ButtonBase
           onClick={() => {
@@ -67,13 +74,15 @@ const CheckAuth = () => {
               confirmActions
                 .open('알림', '인증이 완료되었습니다.')
                 .then(async (answer) => {
-                  router.replace(`/goods/list/${nextPath}`);
+                  router.replace(
+                    `/goods/list/${nextPath}?brandCd=${nextBrandPath}`
+                  );
                 });
             }
           }}
           sx={styles.submitBtnRoot}
         >
-          <Typography sx={styles.btnTxt}>인증</Typography>
+          <Typography sx={styles.btnTxt}>인증하기</Typography>
         </ButtonBase>
         <ButtonBase
           onClick={() => {

@@ -13,7 +13,7 @@ type Props = {
   onClose: (e: KeyboardEvent | MouseEvent) => void;
   onOpen: (e: KeyboardEvent | MouseEvent) => void;
   items: Category[] | null;
-  onSubmit: (path: string) => void;
+  onSubmit: (path: string, brandPath: string) => void;
 };
 
 const BottomMenuDrawer = (props: Props) => {
@@ -55,56 +55,58 @@ const BottomMenuDrawer = (props: Props) => {
           sx={styles.treeView}
         >
           {/* 대분류 카테고리 */}
-          {props.items.map(({ catgryNm, catgryCd, iconUrl, child }, index) => (
-            <TreeItem
-              key={index}
-              nodeId={catgryNm}
-              sx={styles.mainTreeItem}
-              label={
-                <Box
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    props.onSubmit(catgryCd);
-                  }}
-                  sx={styles.mainTreeItemLabelRoot}
-                >
-                  {iconUrl && (
-                    <Image
-                      alt="drawerMainIcon"
-                      css={styles.mainTreeItemLabelIcon}
-                      src={iconUrl}
-                    />
-                  )}
-                  <Typography>{catgryNm}</Typography>
-                </Box>
-              }
-            >
-              {child?.map((item: any, index: number) => {
-                return (
-                  <ButtonBase
-                    key={index}
-                    onClick={() => {
-                      props.onSubmit(item.catgryCd);
+          {props.items.map(
+            ({ catgryNm, catgryCd, brandCd, iconImg, child }, index) => (
+              <TreeItem
+                key={index}
+                nodeId={catgryNm}
+                sx={styles.mainTreeItem}
+                label={
+                  <Box
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      props.onSubmit(catgryCd, brandCd);
                     }}
-                    sx={styles.subTreeItemRoot}
+                    sx={styles.mainTreeItemLabelRoot}
                   >
-                    <Box sx={styles.subTreeItemLabelRoot}>
-                      {iconUrl && (
+                    {iconImg && (
+                      <Image
+                        alt="drawerMainIcon"
+                        css={styles.mainTreeItemLabelIcon}
+                        src={iconImg}
+                      />
+                    )}
+                    <Typography>{catgryNm}</Typography>
+                  </Box>
+                }
+              >
+                {child?.map((item: any, index: number) => {
+                  return (
+                    <ButtonBase
+                      key={index}
+                      onClick={() => {
+                        props.onSubmit(item.catgryCd, item.brandCd);
+                      }}
+                      sx={styles.subTreeItemRoot}
+                    >
+                      <Box sx={styles.subTreeItemLabelRoot}>
+                        {/* {iconImg && (
                         <Image
                           alt="drawerSubIcon"
                           css={styles.subTreeItemLabelIcon}
-                          src={iconUrl}
+                          src={iconImg}
                         />
-                      )}
-                      <Typography sx={styles.subTreeItemLabel}>
-                        {item.catgryNm}
-                      </Typography>
-                    </Box>
-                  </ButtonBase>
-                );
-              })}
-            </TreeItem>
-          ))}
+                      )} */}
+                        <Typography sx={styles.subTreeItemLabel}>
+                          {item.catgryNm}
+                        </Typography>
+                      </Box>
+                    </ButtonBase>
+                  );
+                })}
+              </TreeItem>
+            )
+          )}
         </TreeView>
       )}
     </SwipeableDrawer>

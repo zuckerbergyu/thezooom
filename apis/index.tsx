@@ -24,10 +24,12 @@ export const useGetDefaultData = (custmrId: string | null) =>
 // 상품 리스트 api
 export const getProductList = async ({
   categoryCode,
+  brandCode,
   sort = 0,
   pageParam = 0,
 }: {
   categoryCode: number | null;
+  brandCode: number | null;
   sort?: number;
   pageParam?: number;
 }) => {
@@ -36,6 +38,7 @@ export const getProductList = async ({
 
     const params = {
       mainCatgryCd: categoryCode,
+      brandCd: brandCode,
       viewRowCnt: pageSize,
       currentPage: pageParam,
       sort,
@@ -64,6 +67,7 @@ export const getProductList = async ({
 };
 export function useProductInfiniteList(
   categoryCode: number | null,
+  brandCode: number | null,
   sort: number
 ) {
   return useInfiniteQuery(
@@ -71,11 +75,13 @@ export function useProductInfiniteList(
     ({ pageParam = 0 }) =>
       getProductList({
         categoryCode,
+        brandCode,
         sort,
         pageParam,
       }),
     {
       enabled: true,
+      // enabled: Boolean(categoryCode && brandCode),
       refetchOnWindowFocus: false,
       // keepPreviousData: true, // 확인 필요
       getNextPageParam: (lastPage) => {

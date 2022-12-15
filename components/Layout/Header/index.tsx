@@ -129,9 +129,9 @@ const Header = (props: Props) => {
         onClose={toggleSort(false)}
         onOpen={toggleSort(true)}
         items={sessionCatgoryList}
-        onSubmit={(categoryCode) => {
+        onSubmit={(categoryCode, brandCode) => {
           router
-            .push(`/goods/list/${categoryCode}`)
+            .push(`/goods/list/${categoryCode}?brandCd=${brandCode}`)
             .then(() => toggleSort(false)());
         }}
       />

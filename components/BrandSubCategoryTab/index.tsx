@@ -8,8 +8,8 @@ import { styles } from './styles';
 
 type Props = {
   sx?: SxProps;
-  data: Pick<Category, 'catgryCd' | 'catgryNm'>[];
-  onClick?: (code?: string) => void;
+  data: Pick<Category, 'catgryCd' | 'catgryNm' | 'brandCd'>[];
+  onClick?: (code?: string, brandCode?: string) => void;
 };
 const BrandSubCategoryTab = (props: Props) => {
   const router = useRouter();
@@ -41,7 +41,8 @@ const BrandSubCategoryTab = (props: Props) => {
             name={item.catgryNm}
             key={index}
             path={item.catgryCd}
-            onClick={(code) => props.onClick?.(code)}
+            brandPath={item.brandCd}
+            onClick={(code, brandCode) => props.onClick?.(code, brandCode)}
           />
         ))}
     </Tabs>

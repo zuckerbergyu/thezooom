@@ -56,8 +56,9 @@ export default function Home() {
     }
   }, [data]);
 
-  const handleBrandLogoClick = (path: string) => {
-    if (path === '104') {
+  const handleBrandLogoClick = (path: string, brandPath: number) => {
+    console.log('a', path, typeof brandPath);
+    if (brandPath === 100000) {
       // 전용몰 로그인 여부 체크
       // - 로그인 하였을경우 해당 페이지로 이동
       // - 로그인x -> 로그인 페이지로 이동
@@ -70,12 +71,12 @@ export default function Home() {
           if (answer === '확인') {
             router.push({
               pathname: '/check-auth',
-              query: { pid: path },
+              query: { pid: path, brandCd: brandPath },
             });
           }
         });
     } else {
-      router.push(`/goods/list/${path}`);
+      router.push(`/goods/list/${path}?brandCd=${brandPath}`);
     }
   };
 

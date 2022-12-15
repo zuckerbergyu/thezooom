@@ -116,10 +116,12 @@ export interface OrderSheet {
 
 export interface Category {
   catgryCd: string; // 카테고리코드 101, 101101
+  brandCd: string;
   catgryNm: string; // 캠핑, 운동 ..
   catgryPath: string; // breadcrumb
   catgryPathCd: string; // 상위랑 합쳐서, 만약 상위면 상위만 ex) 101|101101
   iconUrl?: string; // 신원미상
+  iconImg?: string;
   isChild?: 'Y' | 'N'; // Y 는 1뎁스, N 은 2뎁스
   lv: 1 | 2; // 뎁스 1:대분류, 2 :소분류
   mappingUrl?: string; // 신원미상 / breadcrumb

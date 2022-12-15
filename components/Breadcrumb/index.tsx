@@ -27,7 +27,7 @@ const Breadcrumb = (props: Props) => {
               router.push(
                 item.catgryCd === '/'
                   ? item.catgryCd
-                  : `/goods/list/${item.catgryCd}`
+                  : `/goods/list/${item.catgryCd}?brandCd=${item.brandCd}`
               );
             }}
           >
