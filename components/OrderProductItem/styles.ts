@@ -1,5 +1,6 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
-  root: { borderBottom: '1px solid #f0f0f0' },
+  root: { borderBottom: `1px solid ${Colors.gray[100]}` },
   cardRoot: { borderRadius: '7px' },
   cardActionAreaRoot: {
     display: 'flex',
@@ -40,7 +41,7 @@ export const styles = {
   priceTxt: { fontSize: '16px', fontWeight: 700 },
   priceSubTxt: { fontSize: '13px' },
   subInfoTxt: {
-    color: 'gray',
+    color: theme.palette.grey[400],
     fontSize: '12px',
     fontWeight: 500,
   },

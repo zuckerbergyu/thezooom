@@ -1,3 +1,4 @@
+import { Colors } from 'constants/theme';
 export const styles = {
   root: {
     // margin: '10px 0px',
@@ -6,7 +7,7 @@ export const styles = {
     marginBottom: '10px',
   },
   swiperRoot: {
-    // background: '#f0f0f0',
+    // background: Colors.gray[100],
   },
   swiperSlideRoot: {},
 };

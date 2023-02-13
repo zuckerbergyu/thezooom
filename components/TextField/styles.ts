@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {
     display: 'flex',
@@ -10,7 +11,7 @@ export const styles = {
     fontSize: '15px',
   },
   labelIcon: {
-    color: 'blue',
+    color: Colors.primary[600],
   },
   close: { marginRight: '4px' },
   closeIcon: {
@@ -20,7 +21,7 @@ export const styles = {
   form: {
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#e4e4e4',
+    borderColor: theme.palette.grey[300],
     borderRadius: '3px',
     display: 'flex',
     flexDirection: 'row',

@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {
     minHeight: 'calc(100vh - 48px)',
@@ -7,7 +8,7 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '50px',
-    borderBottom: '1px solid #e8e8e8',
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
   },
   headerTxt: {
     fontSize: '20px',
@@ -21,8 +22,8 @@ export const styles = {
     fontSize: '16px',
     width: '100%',
     height: '44px',
-    color: 'white',
-    background: 'black',
+    color: Colors.white,
+    background: Colors.black,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

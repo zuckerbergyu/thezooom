@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Box, Typography, ButtonBase } from '@mui/material';
 import { isMobile } from 'react-device-detect';
 import { useContext as useConfirmContext } from 'contexts/confirm';
-import { useGetOrderListTmp, useGetOrderUpdate } from 'apis/index';
+import { order as orderApi } from 'apis';
 import {
   OrderList as OrderListType,
   OrderSheet as OrderSheetType,
@@ -53,7 +53,7 @@ const Order = () => {
     data: orderListTmpData,
     isSuccess: orderListTmpIsSuccess,
     refetch: orderListTmpRefetch,
-  } = useGetOrderListTmp(orderList);
+  } = orderApi.useGetOrderListTmp(orderList);
 
   // orderList 세팅
   useEffect(() => {
@@ -73,7 +73,12 @@ const Order = () => {
   // 주문 정보 임시저장 api 성공후 / 주문자 정보 세팅
   useEffect(() => {
     if (orderListTmpData && orderListTmpIsSuccess) {
-      setOrdererName(orderListTmpData.result.params.memNm || '');
+      // string null로 내려와서 아래와 같이 세팅
+      setOrdererName(
+        orderListTmpData.result.params.memNm === 'null'
+          ? ''
+          : orderListTmpData.result.params.memNm || ''
+      );
       setOrdererPhone(orderListTmpData.result.params.memHpNo || '');
       setMemSeq(orderListTmpData.result.params.memSeq || '');
       setOrderSeq(orderListTmpData.result.params.orderSeq || 0);
@@ -189,7 +194,7 @@ const Order = () => {
     data: orderUpdateData,
     isSuccess: orderUpdateIsSuccess,
     refetch: orderUpdateRefetch,
-  } = useGetOrderUpdate(orderSheet);
+  } = orderApi.useGetOrderUpdate(orderSheet);
 
   // 구매api 성공후, 이니시스 호출
   useEffect(() => {

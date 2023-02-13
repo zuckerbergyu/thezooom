@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -8,10 +8,11 @@ import {
   Checkbox,
 } from '@mui/material';
 import { useContext as useConfirmContext } from 'contexts/confirm';
-import { useGetAddressSubmit } from 'apis/index';
+import { member as memberApi } from 'apis';
 import TextField from 'components/TextField';
 import DaumAddressFinder from 'components/DaumAddressFinder';
 import isEmptyString from 'libs/isEmptyString';
+import { Address } from 'types';
 import { SxProps } from 'libs/sx';
 import { styles } from './styles';
 
@@ -46,12 +47,8 @@ const AddAddress = (props: Props) => {
     props.setChecked(event.target.checked);
   };
 
-  // TODO: ref 추가하여 커서 이동 시키기 참고:src/components/AddShippingAddress/index.js
-  const subAddressRef = useRef();
-
-  // FIXME: 없어도 등록하는데 문제가 없음 -> api 문서 참조해서 필수값 찾고 Type 설정하기
-  const resultAddressInfo = {
-    dlvAddrSeq: 0, // FIXME: 무엇인지 확인 필요
+  const resultAddressInfo: Address = {
+    dlvAddrSeq: 0,
     addrNick: props.addressAlias,
     rcverNm: props.recipient,
     rcvPost: props.zipCode,
@@ -64,14 +61,14 @@ const AddAddress = (props: Props) => {
   };
 
   // 배송지 등록 api
-  const { data, isSuccess, refetch } = useGetAddressSubmit(resultAddressInfo);
+  const { data, isSuccess } = memberApi.useGetAddressSubmit(resultAddressInfo);
 
   // 배송지 등록 완료후 처리
   useEffect(() => {
     if (data && isSuccess) {
       confirmActions
         .open('알림', '배송지 등록이 완료되었습니다.')
-        .then(async (answer) => {
+        .then(async () => {
           router.replace('/mypage?tabType=add');
         });
     }
@@ -83,7 +80,7 @@ const AddAddress = (props: Props) => {
   };
 
   // 배송지 데이터 체크
-  const checkFormState = (state: any) => {
+  const checkFormState = (state: Address) => {
     if (isEmptyString(state.addrNick)) {
       confirmActions.open('알림', '주소별칭을 입력해 주세요.');
       return false;
@@ -224,8 +221,6 @@ const AddAddress = (props: Props) => {
             props.setAddress(address);
             props.setZipcode(zipCode);
             props.setSigunguCode(sigunguCode);
-            // TODO : ref 추가하여 커서 이동 시키기
-            // subAddressRef.current.focus();
           }}
         />
       </Box>

@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: { padding: '16px 20px' },
   headerRoot: {
@@ -7,7 +8,7 @@ export const styles = {
   addressNickNameRoot: {},
   addressNickNameTxt: {
     fontSize: '14px',
-    color: '#5fc2d5',
+    color: theme.palette.primary.main,
   },
   editDeleteRoot: {
     display: 'flex',
@@ -23,7 +24,7 @@ export const styles = {
     display: 'block',
     width: '1px',
     height: '10px',
-    background: '#d1d1d1',
+    background: theme.palette.grey[300],
     margin: '0px 6px',
   },
   bodyAreaRoot: {
@@ -54,16 +55,16 @@ export const styles = {
     textAlign: 'center',
     borderRadius: '4px',
     borderWidth: '1px',
-    borderColor: '#8a8a8a',
+    borderColor: theme.palette.grey[500],
     borderStyle: 'solid',
   },
   addressSelectedBtnRoot: {
-    borderColor: '#5fc2d5',
+    borderColor: theme.palette.primary.main,
   },
   addressSelectTxt: {
     fontSize: '13px',
   },
   addressSelectedTxt: {
-    color: '#5fc2d5',
+    color: theme.palette.primary.main,
   },
 };

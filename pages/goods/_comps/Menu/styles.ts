@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {
     borderBottom: '.5px solid gray',
@@ -11,9 +12,9 @@ export const styles = {
   tab: {
     fontSize: '17px',
     fontWeight: 500,
-    color: 'gray',
+    color: theme.palette.grey[600],
     '&.Mui-selected': {
-      color: 'black',
+      color: Colors.black,
     },
   },
 };

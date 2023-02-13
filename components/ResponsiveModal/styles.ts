@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: { transformStyle: 'flat' },
   headerRoot: {
@@ -5,7 +6,7 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: 44,
-    borderBottom: '1px solid #e8e8e8',
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
     zIndex: 1000,
     position: 'sticky',
   },
@@ -23,7 +24,7 @@ export const styles = {
     zIndex: 1100,
   },
   closeIcon: {
-    color: 'black',
+    color: Colors.black,
     width: '20px',
     height: '20px',
   },

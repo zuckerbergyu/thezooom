@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box, ButtonBase, Toolbar, AppBar } from '@mui/material';
+import { useUserContext } from 'contexts/User';
 import Image from 'components/Image';
+import LoginModal from 'components/LoginModal';
 import BottomDrawer from 'components/BottomMenuDrawer';
 import { SxProps } from 'libs/sx';
 import { styles } from './styles';
@@ -12,14 +14,15 @@ type Props = {
 };
 const Header = (props: Props) => {
   const router = useRouter();
+  const { user } = useUserContext();
+  const [sortOn, setSortOn] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
 
   // drawer에서 사용하기위한 세션 카테고리 조회
   const sessionCatgoryList: Category[] =
     typeof window !== 'undefined'
       ? JSON.parse(sessionStorage.getItem(StoreKey.CATEGORY) || 'null')
       : null;
-
-  const [sortOn, setSortOn] = useState(false);
 
   const toggleSort =
     (open: boolean) => (event?: React.KeyboardEvent | React.MouseEvent) => {
@@ -73,22 +76,6 @@ const Header = (props: Props) => {
             </ButtonBase>
           </Box>
           <Box>
-            {/* <ButtonBase
-              sx={styles.tipIcon}
-              onClick={() => {
-                router.push('/mypage/tip');
-              }}
-              disableRipple
-              disableTouchRipple
-            >
-              <Image
-                objectFit="cover"
-                width={34}
-                height={34}
-                src={'/images/links_tip.png'}
-                alt="tipLogo"
-              />
-            </ButtonBase> */}
             <ButtonBase
               sx={styles.personIcon}
               onClick={() => {
@@ -130,11 +117,26 @@ const Header = (props: Props) => {
         onOpen={toggleSort(true)}
         items={sessionCatgoryList}
         onSubmit={(categoryCode, brandCode) => {
+          if (String(brandCode) === '100000' && !user?.isBrandLogin) {
+            setOpenLoginModal(true);
+            toggleSort(false)();
+            return;
+          }
           router
             .push(`/goods/list/${categoryCode}?brandCd=${brandCode}`)
             .then(() => toggleSort(false)());
         }}
       />
+      {openLoginModal && (
+        <LoginModal
+          open={openLoginModal}
+          onClose={() => {
+            setOpenLoginModal(false);
+          }}
+          title="2단계 인증"
+          path={'/goods/list/101?brandCd=100000'}
+        />
+      )}
     </Box>
   );
 };

@@ -1,12 +1,15 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   itemRoot: { padding: '20px' },
   ratingRoot: {},
-  rating: { color: 'blue' },
+  rating: { color: '#0000ff' },
   contentRoot: { marginBottom: '10px' },
   content: { fontSzie: '14px' },
   dateRoot: {},
-  date: { color: 'gray' },
+  date: {
+    color: theme.palette.grey[600],
+  },
 
   pagination: {
     display: 'flex',
@@ -15,16 +18,16 @@ export const styles = {
   },
   paginationItem: {
     borderRadius: '0px',
-    border: `1px solid gray`,
-    background: 'white',
-    color: 'black',
+    border: `1px solid ${Colors.grey[600]}`,
+    background: Colors.white,
+    color: Colors.black,
     '&.Mui-selected': {
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: Colors.black,
+      color: Colors.white,
     },
     '&.Mui-selected:hover': {
-      backgroundColor: 'black',
-      color: 'white',
+      backgroundColor: Colors.black,
+      color: Colors.white,
       border: 0,
     },
   },

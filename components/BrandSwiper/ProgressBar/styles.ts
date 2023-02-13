@@ -1,3 +1,4 @@
+import { Colors } from 'constants/theme';
 export const styles = {
   root: {
     padding: '0px 8px',
@@ -6,7 +7,7 @@ export const styles = {
       height: '8px',
       borderRadius: '17px',
       '& .MuiLinearProgress-barColorPrimary': {
-        backgroundColor: 'black',
+        backgroundColor: Colors.black,
       },
       background: '#dcdcdc',
     },

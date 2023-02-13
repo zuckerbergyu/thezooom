@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   divider: {
@@ -16,7 +17,7 @@ export const styles = {
     height: '50px',
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: '#f3f3f3',
+    backgroundColor: theme.palette.grey[100],
     padding: '16px 20px',
   },
   footerInfoPrivacyTxt: {
@@ -39,22 +40,22 @@ export const styles = {
     fontSize: '12px',
   },
   footerCs: {
-    color: 'white',
+    color: Colors.white,
     height: '103px',
     display: 'flex',
     padding: '20px',
     flexDirection: 'row',
-    backgroundColor: 'black',
+    backgroundColor: Colors.black,
   },
   footerCsTitle: {
     width: '75px',
   },
   footerCsTxt: {
-    color: 'white',
+    color: Colors.white,
     fontSize: '12px',
   },
   footerCsPhoneTxt: {
-    color: 'white',
+    color: Colors.white,
     fontSize: '12px',
     paddingBottom: '8px',
   },

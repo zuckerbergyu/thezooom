@@ -1,17 +1,18 @@
+import { Colors } from 'constants/theme';
 export const styles = {
   root: {
     minWidth: 0,
     minHeight: 0,
     padding: '8px 12px',
-    color: 'black',
+    color: Colors.black,
     fontWeight: 500,
     fontSize: '15px',
     overflow: 'visible',
 
     // 선택된 탭
     '&.Mui-selected': {
-      color: 'white',
-      background: 'black',
+      color: Colors.white,
+      background: Colors.black,
       borderRadius: '17px',
 
       // 하단 포인트
@@ -21,7 +22,7 @@ export const styles = {
         content: '""',
         bottom: '-2px',
         position: 'absolute',
-        backgroundColor: 'black',
+        backgroundColor: Colors.black,
         transform: 'rotate(-45deg);',
       },
     },

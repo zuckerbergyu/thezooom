@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {
     display: 'flex',
@@ -10,12 +11,12 @@ export const styles = {
     left: 16,
     bottom: -60,
     zIndex: 1100,
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     overflow: 'hidden',
     borderRadius: '50%',
     boxShadow: '0px 6px 8px rgba(0, 0, 0, 0.3)',
     '&:hover': {
-      backgroundColor: '#ffffff',
+      backgroundColor: Colors.white,
     },
     opacity: 0,
     transition: 'ease all 0.3s',
@@ -24,6 +25,6 @@ export const styles = {
   icon: {
     width: 24,
     height: 24,
-    color: '#6f7074',
+    color: theme.palette.grey[600],
   },
 };

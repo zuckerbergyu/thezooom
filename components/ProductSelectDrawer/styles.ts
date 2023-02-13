@@ -1,4 +1,5 @@
 import { ScreenMargin } from 'constants/styles';
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   drawer: {
@@ -9,10 +10,10 @@ export const styles = {
     borderTopRightRadius: '16px',
     bottom: '50px',
     paddingBottom: '28px',
-    background: 'wthie',
+    background: Colors.white,
   },
   headerRoot: {
-    background: 'white',
+    background: Colors.white,
     padding: '15px 18px',
   },
   titleTxt: {
@@ -29,7 +30,7 @@ export const styles = {
       order: 1,
       width: '24px',
       height: '24px',
-      color: 'gray',
+      color: theme.palette.grey[400],
       overflow: 'visible',
       paddingRight: '16px',
       '& svg': {
@@ -38,30 +39,30 @@ export const styles = {
       },
     },
     '& .MuiTreeItem-label': {
-      color: 'black',
+      color: Colors.black,
       fontSize: '15px',
       padding: '16px 0px 16px 4px',
       marginRight: '50px',
     },
     '& .MuiTreeItem-group': {
       margin: 'auto',
-      borderBottom: '1px solid #d8d8d8',
+      borderBottom: `1px solid ${Colors.gray[200]}`,
       maxHeight: '160px',
       overflowY: 'scroll',
     },
     '& .MuiTreeItem-content': {
-      borderBottom: '1px solid #d8d8d8',
+      borderBottom: `1px solid ${Colors.gray[200]}`,
     },
     '& .MuiTreeItem-expanded': {},
   },
   subTreeItemRoot: {
     width: '100%',
-    background: '#f0f0f0',
+    background: Colors.gray[100],
     display: 'flex',
     justifyContent: 'start',
   },
   subTreeItemLabel: {
-    color: 'black',
+    color: Colors.black,
     fontSize: '14px',
     fontWeight: 400,
     padding: '8px 30px ',
@@ -70,13 +71,13 @@ export const styles = {
   },
   subTreeItemNoStock: {
     textDecoration: 'line-through',
-    color: 'gray',
+    color: theme.palette.grey[400],
   },
 
   addSellTxt: {
     marginLeft: '8px',
     fontSize: '12px',
-    color: '#1b81a8',
+    color: Colors.primary[600],
   },
 
   paymentCalculationRoot: {
@@ -86,7 +87,7 @@ export const styles = {
     boxShadow: 3,
     borderWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#5fc2d5',
+    borderColor: theme.palette.primary.main,
     borderRadius: '5px',
     padding: '14px',
     marginBottom: '10px',
@@ -102,7 +103,7 @@ export const styles = {
     padding: 0,
   },
   cancelIcon: {
-    color: 'gray',
+    color: theme.palette.grey[400],
   },
   paymentCalculationBodyRoot: {
     display: 'flex',
@@ -116,19 +117,23 @@ export const styles = {
 
   quantityTxt: {
     margin: '0px 12px',
-    color: 'black',
+    color: Colors.black,
     fontSize: '17px',
     fontWeight: 600,
   },
-  addRemoveIcon: { color: 'black' },
+  addRemoveIcon: { color: Colors.black },
   price: { fontSize: '18px', fontWeight: 500 },
   finalPriceRoot: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '15px 18px',
-    borderTop: '1px solid #d8d8d8',
+    borderTop: `1px solid ${Colors.gray[200]}`,
   },
   finalPriceLabel: { fontSize: '18px' },
-  finalPrice: { fontSize: '20px', color: '#5fc2d5', fontWeight: 600 },
+  finalPrice: {
+    fontSize: '20px',
+    color: theme.palette.primary.main,
+    fontWeight: 600,
+  },
 };

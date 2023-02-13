@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   mainTabRoot: {},
@@ -14,40 +15,38 @@ export const styles = {
     minHeight: '38px',
     fontSize: '15px',
     fontWeight: 500,
-    color: 'black',
+    color: Colors.black,
     '&.Mui-selected': {
       borderRadius: '4px',
-      color: 'white',
-      background: 'black',
+      color: Colors.white,
+      background: Colors.black,
     },
   },
   mainTabPanelRoot: {},
   subTabRoot: {},
   subTabs: {
     '.MuiTabs-indicator': {
-      background: 'black',
+      background: Colors.black,
       height: 3,
     },
   },
   subTab: {
-    background: '#f0f0f0',
+    background: Colors.gray[100],
     fontSize: '14px',
     fontWeight: 500,
-    color: '#444',
-    borderBottom: '3px solid #e1e1e1',
+    color: theme.palette.grey[600],
+    borderBottom: `3px solid ${theme.palette.grey[300]}`,
     '&.Mui-selected': {
-      color: 'black',
+      color: Colors.black,
     },
   },
   subTabPanelRoot: {
-    // background: '#f0f0f0',
     minHeight: 'calc(100vh - 142px)',
   },
   submitAddressRoot: {
     padding: '16px 20px',
-    background: 'ellow',
-    borderTop: '1px solid #e8e8e8',
-    borderBottom: '1px solid #e8e8e8',
+    borderTop: `1px solid ${theme.palette.grey[300]}`,
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
   },
   submitAddressBtnRoot: {
     padding: '10px 0px',
@@ -56,7 +55,7 @@ export const styles = {
     textAlign: 'center',
     borderRadius: '4px',
     borderWidth: '1px',
-    borderColor: '#8a8a8a',
+    borderColor: theme.palette.grey[500],
     borderStyle: 'solid',
   },
   submitAddressTxt: { fontSize: '14px' },

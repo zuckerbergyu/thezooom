@@ -1,15 +1,12 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Tabs, Tab, NoSsr, Typography } from '@mui/material';
 import { useContext as useConfirmContext } from 'contexts/confirm';
 import { NO_ORDER_LIST, NO_REVIEW_LIST, NO_ADDRESS_LIST } from 'constants/meta';
-import {
-  useGetOrderList,
-  useGetAddress,
-  useGetAddressDelete,
-} from 'apis/index';
+import { member as memberApi, mypage as mypageApi } from 'apis';
 import useBtnTop from 'libs/useBtnTop';
 import Empty from 'components/Empty';
+import { DeleteAddress } from 'types';
 import OrderItem from './_comps/OrderItem';
 import Panel from './_comps/Panel';
 import AddressItem from './_comps/AddressItem';
@@ -28,7 +25,9 @@ const Mypage = () => {
   const [selectedSubTabIdx, setSelectedSubTabIdx] = useState(0);
 
   // 배송지 삭제 params
-  const [deleteItem, setDeleteItem] = useState({});
+  const [deleteItem, setDeleteItem] = useState<DeleteAddress>({
+    delList: [],
+  });
 
   // query.tabType과 함께 페이지 진입시 탭 선택 처리
   useEffect(() => {
@@ -50,18 +49,18 @@ const Mypage = () => {
     data: orderListData,
     isSuccess: orderRequestSuccess,
     refetch: fetchOrderList,
-  } = useGetOrderList();
+  } = mypageApi.useGetOrderList();
 
   // 배송지 리스트 조회 api
   const {
     data: addressListData,
     isSuccess: addressRequestSuccess,
     refetch: fetchAddressList,
-  } = useGetAddress();
+  } = memberApi.useGetAddress();
 
   // 배송지 삭제 api
   const { data: addressDeleteData, isSuccess: addressDeleteSuccess } =
-    useGetAddressDelete(deleteItem);
+    memberApi.useGetAddressDelete(deleteItem);
 
   // 주문 리스트
   const orderList = useMemo(() => {
@@ -110,7 +109,7 @@ const Mypage = () => {
   // 배송지 삭제후 배송지 리스트 갱신
   useEffect(() => {
     if (addressDeleteData && addressDeleteSuccess) {
-      setDeleteItem({});
+      setDeleteItem({ delList: [] });
       fetchAddressList();
     }
   }, [addressDeleteData, addressDeleteSuccess]);

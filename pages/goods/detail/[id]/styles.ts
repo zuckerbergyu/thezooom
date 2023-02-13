@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   divider: {
@@ -36,7 +37,7 @@ export const styles = {
     marginBottom: '10px',
   },
   salePercentage: {
-    color: 'red',
+    color: Colors.red,
     fontWeight: 600,
     fontSize: '18px',
     marginRight: '4px',
@@ -46,7 +47,7 @@ export const styles = {
     fontSize: '20px',
   },
   price: {
-    color: 'gray',
+    color: theme.palette.grey[600],
     textDecoration: 'line-through',
     marginLeft: '9px',
     fontSize: '15px',
@@ -55,7 +56,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: '#f5f6f9',
+    background: theme.palette.grey[100],
     borderRadius: '2px',
     width: 'fit-content',
     marginBottom: '34px',
@@ -72,16 +73,13 @@ export const styles = {
     position: 'fixed',
     top: 'auto',
     bottom: 0,
-    // 전체너비로 할경우 주석해제하고 maxwidth 삭제
     maxWidth: '1000px',
-    // left: 0,
-    // right: 0,
     fontWeight: 700,
     fontSize: '19px',
     width: '100vw',
     height: '64px',
-    color: 'white',
-    background: 'black',
+    color: Colors.white,
+    background: Colors.black,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

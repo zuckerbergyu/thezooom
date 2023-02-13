@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import Image from 'components/Image';
+import theme, { Colors } from 'constants/theme';
 
 const Error = () => {
   const router = useRouter();
@@ -47,13 +48,17 @@ export const styles = {
     fontWeight: 700,
     marginTop: '20px',
   },
-  subInfo: { fontSize: '14px', fontWeight: 500, color: 'gray' },
+  subInfo: {
+    fontSize: '14px',
+    fontWeight: 500,
+    color: theme.palette.grey[400],
+  },
   btnRoot: {
     marginTop: '8px',
     background: '#f99828',
     padding: '10px 24px',
     borderRadius: '22px',
   },
-  btnLabel: { color: 'white', fontWeight: 600, fontSize: '15px' },
+  btnLabel: { color: Colors.white, fontWeight: 600, fontSize: '15px' },
 };
 export default Error;

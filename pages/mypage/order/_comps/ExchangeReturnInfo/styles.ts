@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
 
@@ -14,8 +15,12 @@ export const styles = {
 
   innerRoot: { padding: '10px 0px 10px 10px' },
   innerTxtRoot: { display: 'flex', marginBottom: '4px' },
-  innerTxt: { fontSize: '12px', color: '#707070' },
+  innerTxt: { fontSize: '12px', color: theme.palette.grey[600] },
 
   dotTxt: { fontSize: '12px', marginRight: '4px' },
-  innerDotTxt: { fontSize: '12px', marginRight: '4px', color: '#c0c0c0' },
+  innerDotTxt: {
+    fontSize: '12px',
+    marginRight: '4px',
+    color: Colors.gray[300],
+  },
 };

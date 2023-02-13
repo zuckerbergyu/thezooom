@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-
 import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
 import Layout from 'components/Layout';
-import { getLogin } from 'apis/index';
+import { member as memberApi } from 'apis';
 import { UserContext } from 'contexts/User';
 import { BtnTopContext } from 'contexts/btnTop';
 import { Provider as ConfirmProvider } from 'contexts/confirm';
@@ -20,7 +17,7 @@ import ConfirmDialog from 'components/ConfirmDialog';
 import createEmotionCache from 'libs/createEmotionCache';
 import { useScrollRestoration } from 'libs/useScrollRestoration';
 import { User, StoreKey } from 'types';
-import theme from 'constants/theme';
+import theme, { Colors } from 'constants/theme';
 import { DEFAULT_SEO } from 'constants/seo';
 // global style 추가하기
 
@@ -48,13 +45,21 @@ const useUser = () => {
   const [userCtx, setUserCtx] = useState<User>({
     custmrId: '',
     isLogin: false,
+    isBrandLogin: false,
     token: '',
   });
+
+  const setBrandLogin = (isBrandLogin: boolean) => {
+    setUserCtx({ ...userCtx, isBrandLogin: isBrandLogin });
+    sessionStorage.setItem(
+      StoreKey.USER,
+      JSON.stringify({ ...userCtx, isBrandLogin: isBrandLogin })
+    );
+  };
 
   useEffect(() => {
     const getUser =
       typeof window !== 'undefined' && sessionStorage.getItem(StoreKey.USER);
-    const isProd = process.env.NEXT_PUBLIC_APP_ENV === 'PROD';
     if (router.isReady) {
       try {
         if (getUser) {
@@ -62,21 +67,28 @@ const useUser = () => {
           const user = JSON.parse(getUser);
           setUserCtx(user);
         } else {
+          if (router.pathname === '/not-authorized') return;
+
           // TODO 여기서 최초로 호출하고, 그다음 부터는 호출 하지 않는다.
           console.log('user정보 없다면, api 호출');
           (async () => {
-            const memId = isProd ? router.query.memId : 'testUser';
-            const custmrId = isProd
-              ? document.location.host.split('.')[0]
-              : 'hue';
+            // TODO: 실제 운영에선 아래 사용
+            // const isProd = process.env.NEXT_PUBLIC_APP_ENV === 'PROD';
+            // const memId = isProd ? router.query.memId : 'testUser';
+            // const custmrId = isProd
+            //   ? document.location.host.split('.')[0]
+            //   : 'hue';
+            // const param = { memId, custmrId };
 
             // FIXME:임시로 세팅
-            // const param = { memId, custmrId };
-            // const param = { memId: 'testUser', custmrId: 'hue' };
-            const param = { memId: 'testUser', custmrId: 'nudgecash' };
+            const param: memberApi.LoginParams = {
+              memId: 'testUser',
+              // custmrId: 'nudgecash',
+              custmrId: 'hue',
+            };
 
             // 인증 정보 조회
-            const { data } = await getLogin(param);
+            const { data } = await memberApi.getLogin(param);
             if (!data) {
               router.push('/not-authorized');
               return;
@@ -87,6 +99,7 @@ const useUser = () => {
               custmrId: memInfo.custmrId,
               token: memInfo.token,
               isLogin: true,
+              isBrandLogin: false,
             };
             sessionStorage.setItem(StoreKey.USER, JSON.stringify(user));
             setUserCtx(user);
@@ -99,6 +112,7 @@ const useUser = () => {
   }, [router]);
   return {
     user: userCtx,
+    setBrandLogin,
   };
 };
 
@@ -116,9 +130,10 @@ const queryClient = new QueryClient();
 
 export default function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const router = useRouter();
 
   // 로그인
-  const { user } = useUser();
+  const { user, setBrandLogin } = useUser();
 
   // 위로가기 버튼(특정 페이지에서만 사용하기위해 context생성(전부는 아니지만 여러곳))
   const { btnTop, setBtnTop } = useBtnTop();
@@ -126,11 +141,26 @@ export default function MyApp(props: MyAppProps) {
   // 스크롤 유지
   useScrollRestoration();
 
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleStop = () => setLoading(false);
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleStop);
+    router.events.on('routeChangeError', handleStop);
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleStop);
+      router.events.off('routeChangeError', handleStop);
+    };
+  }, [router]);
+
   return (
     <CacheProvider value={emotionCache}>
       <DefaultSeo {...DEFAULT_SEO} />
 
-      <UserContext.Provider value={{ user }}>
+      <UserContext.Provider value={{ user, setBrandLogin }}>
         <QueryClientProvider client={queryClient}>
           <Head>
             <meta
@@ -147,9 +177,12 @@ export default function MyApp(props: MyAppProps) {
                   <Layout>
                     <Component {...pageProps} />
                   </Layout>
-                  {/* <Box sx={styles.loader}> */}
-                  {/* <Loader color="#5fc2d5" /> */}
-                  {/* </Box> */}
+                  {/* 임시 로딩 적용 / 부자연스러우면 삭제할것 */}
+                  {loading && (
+                    <Box sx={styles.loader}>
+                      <Loader height={100} color="#5fc2d5" />
+                    </Box>
+                  )}
                 </BtnTopContext.Provider>
                 <ConfirmDialog />
               </Box>
@@ -180,10 +213,11 @@ const styles = {
     right: 0,
     bottom: 0,
     zIndex: 2000,
-    backgroundColor: '#000000',
+    backgroundColor: Colors.black,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.6,
+    transition: 'ease all 0.3s',
   },
 };

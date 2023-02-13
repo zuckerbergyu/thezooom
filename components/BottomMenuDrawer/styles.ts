@@ -1,4 +1,5 @@
 import { ScreenMargin } from 'constants/styles';
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   drawer: {
@@ -15,7 +16,7 @@ export const styles = {
       order: 1,
       width: '34px',
       height: '34px',
-      color: 'gray',
+      color: theme.palette.grey[400],
       overflow: 'visible',
       paddingRight: '16px',
       '& svg': {
@@ -24,7 +25,7 @@ export const styles = {
       },
     },
     '& .MuiTreeItem-label': {
-      color: 'black',
+      color: Colors.black,
       fontSize: '15px',
       padding: '16px 0px 16px 4px',
       marginRight: '50px',
@@ -45,7 +46,7 @@ export const styles = {
   },
   subTreeItemRoot: {
     width: '100%',
-    background: '#ebebeb',
+    background: theme.palette.grey[200],
     display: 'flex',
     justifyContent: 'start',
   },
@@ -54,12 +55,7 @@ export const styles = {
     display: 'flex',
   },
   subTreeItemLabel: {
-    color: '#666',
+    color: theme.palette.grey[700],
     fontSize: '14px',
-  },
-  subTreeItemLabelIcon: {
-    width: '18px',
-    height: '18px',
-    marginRight: '10px',
   },
 };

@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useContext as useConfirmContext } from 'contexts/confirm';
-import {
-  useGetAddress,
-  useGetAddressDelete,
-  useGetAddressSubmit,
-} from 'apis/index';
+import { member as memberApi } from 'apis';
 import AddAddress from 'components/AddAddress';
 import ResponsiveModal from 'components/ResponsiveModal';
 import Empty from 'components/Empty';
 import { NO_ADDRESS_LIST } from 'constants/meta';
 import { SxProps } from 'libs/sx';
 import AddressItem from '../AddressItem';
+import { Address, DeleteAddress } from 'types';
 import { styles } from './styles';
 
 // TODO: 배송지 수정: api 확인후 추가
@@ -30,20 +27,21 @@ const AddressModal = (props: Props) => {
   });
 
   const [curAddressIndex, setCurAddressIndex] = useState(0); // 현재 선택된 배송지 index
-  const [deleteItem, setDeleteItem] = useState({}); // 배송지 삭제 params
+  const [deleteItem, setDeleteItem] = useState<DeleteAddress>({
+    delList: [],
+  }); // 배송지 삭제 params
 
-  const [addressAlias, setAddressAlias] = useState(''); // 주소 별칭
-  const [recipient, setRecipient] = useState(''); // 수령인
-  const [address, setAddress] = useState(''); // 기본주소
-  const [zipCode, setZipcode] = useState(''); // 우편번호
-  const [sigunguCode, setSigunguCode] = useState(''); // 시군구 코드
-  const [detailAddress, setDetailAddress] = useState(''); // 사용자 작성 상세주소
-  const [phoneNumber, setPhoneNumber] = useState(''); // 사용자 작성 상세주소
+  const [addressAlias, setAddressAlias] = useState('');
+  const [recipient, setRecipient] = useState('');
+  const [address, setAddress] = useState('');
+  const [zipCode, setZipcode] = useState('');
+  const [sigunguCode, setSigunguCode] = useState('');
+  const [detailAddress, setDetailAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [checked, setChecked] = useState(false);
 
-  // 배송지 등록 param / FIXME: 없어도 등록하는데 문제가 없음 -> api 문서 참조해서 필수값 찾고 Type 설정하기
-  const resultAddressInfo = {
-    dlvAddrSeq: 0, // FIXME: 무엇인지 확인 필요
+  const resultAddressInfo: Address = {
+    dlvAddrSeq: 0,
     addrNick: addressAlias,
     rcverNm: recipient,
     rcvPost: zipCode,
@@ -60,18 +58,18 @@ const AddressModal = (props: Props) => {
     data: addressListData,
     isSuccess: addressRequestSuccess,
     refetch: fetchAddressList,
-  } = useGetAddress();
+  } = memberApi.useGetAddress();
 
   // 배송지 등록 api
   const {
     data: addressSubmitData,
     isSuccess: addressSubmitIsSuccess,
     refetch,
-  } = useGetAddressSubmit(resultAddressInfo);
+  } = memberApi.useGetAddressSubmit(resultAddressInfo);
 
   // 배송지 삭제 api
   const { data: addressDeleteData, isSuccess: addressDeleteSuccess } =
-    useGetAddressDelete(deleteItem);
+    memberApi.useGetAddressDelete(deleteItem);
 
   // 최초 진입시 api호출
   useEffect(() => {
@@ -129,7 +127,7 @@ const AddressModal = (props: Props) => {
   // 배송지 삭제후 처리
   useEffect(() => {
     if (addressDeleteData && addressDeleteSuccess) {
-      setDeleteItem({});
+      setDeleteItem({ delList: [] });
       fetchAddressList();
     }
   }, [addressDeleteData, addressDeleteSuccess]);
@@ -139,7 +137,7 @@ const AddressModal = (props: Props) => {
     if (addressSubmitData && addressSubmitIsSuccess) {
       confirmActions
         .open('알림', '배송지 등록이 완료되었습니다.')
-        .then(async (answer) => {
+        .then(async () => {
           fetchAddressList();
 
           setAddressAlias('');

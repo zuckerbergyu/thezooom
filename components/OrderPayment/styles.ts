@@ -1,9 +1,10 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   headerRoot: { padding: '16px 20px' },
   headerTxt: { fontSize: '18px', fontWeight: 500 },
-  bodyAreaRoot: { padding: '16px 20px', background: '#f0f0f0' },
-  bodyRoot: { background: 'white', borderRadius: '6px' },
+  bodyAreaRoot: { padding: '16px 20px', background: Colors.gray[100] },
+  bodyRoot: { background: Colors.white, borderRadius: '6px' },
   bodyPriceRoot: { padding: '20px 20px' },
   bodyPriceInfoRoot: {
     display: 'flex',
@@ -14,8 +15,7 @@ export const styles = {
   bodyPriceInfoTitle: { fontSize: '15px' },
   bodyPriceInfoContent: { fontSize: '15px', fontWeight: 600 },
   bodyFinalPriceRoot: {
-    // background: '#0161f3',
-    background: '#5fc2d5',
+    background: theme.palette.primary.main,
     borderBottomLeftRadius: '6px',
     borderBottomRightRadius: '6px',
     padding: '17px 20px',
@@ -23,7 +23,7 @@ export const styles = {
   bodyFinalPriceInfoRoot: {
     display: 'flex',
     justifyContent: 'space-between',
-    color: 'white',
+    color: Colors.white,
   },
   bodyFinalPriceInfoTitle: { fontSize: '15px', fontWeight: 700 },
   bodyFinalPriceInfoContent: { fontSize: '19px', fontWeight: 600 },

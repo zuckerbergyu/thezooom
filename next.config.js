@@ -11,7 +11,7 @@ if (dotEnvResult.error) {
 }
 
 const { HOST, BACKEND_API, PORT, APP_ENV, GIT_COMMIT } = process.env;
-const DEFAULT_PORT = 3000;
+const DEFAULT_PORT = 8080;
 
 module.exports = (phase) => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
@@ -30,9 +30,10 @@ module.exports = (phase) => {
   if (HOST.includes('https://')) {
     env.IS_SSL = true;
   }
+
   const rewrites = () => {
     console.log('CURRENT URL : ', HOST);
-    console.log('--------> PROXY_URL : ', BACKEND_API);
+    console.log('PROXY_URL : ', BACKEND_API);
     return {
       fallback: [
         {
@@ -53,42 +54,20 @@ module.exports = (phase) => {
   };
 
   return {
-    // 구글참조 test
-    // assetPrefix: '.',
-    // distDir: '.next',
-    // webpack(config, options) {
-    //   const prod = process.env.NODE_ENV === 'production';
-    //   if (process.env.NODE_ENV === 'production') {
-    //     // config.output.filename = 'js/[name].js?hash=[hash]';
-    //     // config.output.chunkFilename = 'js/[name].js?hash=[hash]';
-    //   }
-    //   return config;
-    // },
-
     images: {
       // domains: ['domain image url'],
     },
     env,
+    // FIXME: server.js테스트위해 주석
     rewrites,
     redirects,
     generateBuildId: async () => {
-      console.log('BUILD_ID', GIT_COMMIT);
       return GIT_COMMIT || '123456789';
     },
-    // i18n: {
-    //   locales: ['en', 'ko'],
-    //   defaultLocale: 'en',
-    // },
     typescript: {
-      // !! WARN !!
-      // Dangerously allow production builds to successfully complete even if
-      // your project has type errors.
-      // !! WARN !!
       ignoreBuildErrors: true,
     },
     eslint: {
-      // Warning: This allows production builds to successfully complete even if
-      // your project has ESLint errors.
       ignoreDuringBuilds: true,
     },
     pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],

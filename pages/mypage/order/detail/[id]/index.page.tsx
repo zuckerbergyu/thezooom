@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Typography, ButtonBase } from '@mui/material';
 import { styles } from './styles';
 import { useRouter } from 'next/router';
-import { useGetOrderDetail } from 'apis';
+import { order as orderApi } from 'apis';
 import FoldingSection from 'components/FoldingSection';
 import OrderProductItem from 'components/OrderProductItem';
 import OrderPayment from 'components/OrderPayment';
@@ -15,7 +15,7 @@ const OrderDetail = () => {
     router.isReady && router.query.id ? String(router.query.id) : '';
 
   // 주문 상세 조회 api
-  const { data, isSuccess } = useGetOrderDetail(orderId);
+  const { data, isSuccess } = orderApi.useGetOrderDetail(orderId);
 
   const { goodsList, orderInfo } = useMemo(() => {
     if (data && isSuccess) {

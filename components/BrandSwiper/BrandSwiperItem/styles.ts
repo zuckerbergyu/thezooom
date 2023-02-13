@@ -1,3 +1,4 @@
+import theme from 'constants/theme';
 export const styles = {
   root: {
     display: 'flex',
@@ -9,7 +10,7 @@ export const styles = {
     margin: '12px',
     borderStyle: 'solid',
     borderWidth: '1px',
-    borderColor: '#e6e6e6',
+    borderColor: theme.palette.grey[300],
   },
   img: { borderRadius: '50%' },
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Typography, NoSsr, ButtonBase } from '@mui/material';
 import { useContext as useConfirmContext } from 'contexts/confirm';
-import { useGetGoodsDetail } from 'apis';
+import { goods as goodsApi } from 'apis';
 import Image from 'components/Image';
 import Divider from 'components/Divider';
 import Breadcrumb from 'components/Breadcrumb';
@@ -39,12 +39,16 @@ const GoodsDetail = () => {
     typeof window !== 'undefined'
       ? JSON.parse(sessionStorage.getItem(StoreKey.BREADCRUMB) || '[]')
       : [];
+  const hasBreadCrumb =
+    router.isReady && router.query.breadcrumb
+      ? Boolean(router.query.breadcrumb)
+      : false;
 
   const goodsSeq =
     router.isReady && router.query.id ? Number(router.query.id) : null;
 
   // 상품 상세 조회 api
-  const { data, isSuccess } = useGetGoodsDetail(goodsSeq);
+  const { data, isSuccess } = goodsApi.useGetGoodsDetail(goodsSeq);
 
   const goodsInfo = useMemo<GoodsInfoType | null>(() => {
     if (isSuccess && data.result.goodsInfo) {
@@ -134,7 +138,7 @@ const GoodsDetail = () => {
     goodsInfo && (
       <Box sx={styles.root}>
         <Box sx={styles.headerRoot}>
-          <Breadcrumb items={breadCrumb} />
+          {hasBreadCrumb && <Breadcrumb items={breadCrumb} />}
           <Box sx={styles.thumbnailRoot}>
             <Image
               layout="fill"

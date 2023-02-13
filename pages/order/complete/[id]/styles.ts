@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   headerRoot: {
@@ -5,7 +6,7 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '50px',
-    borderBottom: '1px solid #e8e8e8',
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
   },
   headerTxt: {
     fontSize: '20px',
@@ -25,11 +26,11 @@ export const styles = {
   goShoppingBtn: {
     width: '100%',
     height: '64px',
-    background: 'black',
+    background: Colors.black,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '4px',
   },
-  goShoppingTxt: { color: 'white', fontWeight: 700, fontSize: '19px' },
+  goShoppingTxt: { color: Colors.white, fontWeight: 700, fontSize: '19px' },
 };

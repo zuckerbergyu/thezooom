@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Box } from '@mui/material';
-import { useSearchProductInfiniteList } from 'apis/index';
+import { goods as goodsApi } from 'apis';
 import SearchField from 'components/SearchField';
 import InfiniteScroll from 'components/InfiniteScroll';
 import ProductGridHeader from 'components/ProductGridHeader';
@@ -18,7 +18,7 @@ const Search = () => {
 
   // 상품 리스트 조회 api
   const { data, refetch, fetchNextPage, hasNextPage, isFetching, isFetched } =
-    useSearchProductInfiniteList(keyword, sort);
+    goodsApi.useSearchProductInfiniteList(keyword, sort);
 
   // 인피니티 스크롤을 위하여, 상품 리스트 합성
   const productList = useMemo<ProductItem[]>(() => {
@@ -66,7 +66,7 @@ const Search = () => {
         onSubmit={(value) => {
           setSort(0);
           setKeyword(value);
-          refetch();
+          // refetch();
         }}
         initialValue={keyword}
       />

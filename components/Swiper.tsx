@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper';
+import SwiperCore, { Autoplay, Pagination } from 'swiper';
 import { SxProps } from 'libs/sx';
 import { Box } from '@mui/material';
 import 'swiper/css';

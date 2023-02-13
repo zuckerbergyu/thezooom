@@ -1,11 +1,10 @@
-import { red } from '@mui/material/colors';
-
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {
     padding: '13px 20px',
   },
   tabItemRoot: {
-    background: 'white',
+    background: Colors.white,
     padding: '7px',
     fontSize: '14px',
     whiteSpace: 'nowrap',
@@ -15,8 +14,8 @@ export const styles = {
     alignItems: 'center',
     borderWidth: '1px',
     borderStyle: 'solid',
-    color: 'gray',
-    borderColor: 'gray',
+    color: theme.palette.grey[400],
+    borderColor: theme.palette.grey[400],
     borderRadius: '3px',
     margin: '0px  8px 4px 0px',
     '&:last-child': {
@@ -24,8 +23,8 @@ export const styles = {
     },
   },
   click: {
-    color: '#0061f2',
-    borderColor: '#0061f2',
+    color: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
   },
   divider: { width: '100%' },
 };

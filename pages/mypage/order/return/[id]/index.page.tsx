@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography, ButtonBase } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useContext as useConfirmContext } from 'contexts/confirm';
-import { useGetReturn } from 'apis/index';
+import { order as orderApi } from 'apis';
 import { SELECT_CANCEL_RETURN_OPTIONS as options } from 'constants/meta';
 import SelectReasonMemo from '../../_comps/SelectReasonMemo';
 import ExchangeReturnInfo from '../../_comps/ExchangeReturnInfo';
@@ -16,12 +16,12 @@ const OrderReturn = () => {
   const orderSeq =
     router.isReady && router.query.id ? Number(router.query.id) : null;
 
-  const params = {
+  const params: orderApi.ExchangeOrReturnParams = {
     orderGrpSeq: orderSeq,
     msg: reason,
   };
 
-  const { data, isSuccess, refetch } = useGetReturn(params);
+  const { data, isSuccess, refetch } = orderApi.useGetReturn(params);
 
   useEffect(() => {
     if (data && isSuccess) {

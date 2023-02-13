@@ -1,8 +1,9 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   appBar: {
     margin: '0px',
-    background: 'white',
+    background: Colors.white,
     position: 'relative',
   },
   toolBar: {

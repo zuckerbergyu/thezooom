@@ -1,6 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box } from '@mui/material';
+import { useUserContext } from 'contexts/User';
+import { useContext as useConfirmContext } from 'contexts/confirm';
 import Empty from 'components/Empty';
 import Image from 'components/Image';
 import Loader from 'components/Loader';
@@ -11,7 +13,7 @@ import BrandSubCategoryTab from 'components/BrandSubCategoryTab';
 import Breadcrumb from 'components/Breadcrumb';
 import useBtnTop from 'libs/useBtnTop';
 import { NO_PRODUCT } from 'constants/meta';
-import { useProductInfiniteList } from 'apis/index';
+import { goods as goodsApi } from 'apis';
 import { Category, ProductItem, StoreKey } from 'types/index';
 import { styles } from './styles';
 
@@ -19,6 +21,7 @@ type SubCategoryTabType = Pick<Category, 'catgryCd' | 'catgryNm' | 'brandCd'>[];
 
 const GoodsList = () => {
   const router = useRouter();
+  const [, confirmActions] = useConfirmContext();
   useBtnTop();
 
   const [sort, setSort] = useState(0);
@@ -36,9 +39,20 @@ const GoodsList = () => {
       ? Number(router.query.brandCd)
       : null;
 
+  const { user } = useUserContext();
+  useEffect(() => {
+    if (brandCode === 100000 && !user?.isBrandLogin) {
+      confirmActions
+        .open('알림', '2차인증후 이용 가능합니다.')
+        .then(async () => {
+          router.push('/');
+        });
+    }
+  }, [brandCode]);
+
   // 상품 리스트 조회 api
   const { data, refetch, fetchNextPage, hasNextPage, isFetching } =
-    useProductInfiniteList(categoryCode, brandCode, sort);
+    goodsApi.useProductInfiniteList(categoryCode, brandCode, sort);
 
   // 서브 카테고리 처리
   useEffect(() => {

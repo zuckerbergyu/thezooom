@@ -1,3 +1,4 @@
+import theme from 'constants/theme';
 export const styles = {
   root: {},
   headerRoot: {
@@ -5,7 +6,7 @@ export const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: '50px',
-    borderBottom: '1px solid #e8e8e8',
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
   },
   headerTxt: {
     fontSize: '20px',

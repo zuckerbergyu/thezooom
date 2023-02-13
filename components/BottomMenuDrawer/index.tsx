@@ -90,13 +90,6 @@ const BottomMenuDrawer = (props: Props) => {
                       sx={styles.subTreeItemRoot}
                     >
                       <Box sx={styles.subTreeItemLabelRoot}>
-                        {/* {iconImg && (
-                        <Image
-                          alt="drawerSubIcon"
-                          css={styles.subTreeItemLabelIcon}
-                          src={iconImg}
-                        />
-                      )} */}
                         <Typography sx={styles.subTreeItemLabel}>
                           {item.catgryNm}
                         </Typography>

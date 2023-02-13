@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Box, Container, Typography } from '@mui/material';
-import { useGetDefaultData } from 'apis';
+import { Box, Container } from '@mui/material';
+import { member as memberApi } from 'apis';
 import { useUserContext } from 'contexts/User';
-import { useContext as useConfirmContext } from 'contexts/confirm';
 import BrandSwiper from 'components/BrandSwiper';
 import Footer from 'components/Layout/Footer';
+import LoginModal from 'components/LoginModal';
 import { StoreKey, Category } from 'types';
+import WebView from 'components/WebView';
 
 export default function Home() {
   const router = useRouter();
   const { user } = useUserContext();
-  const [, confirmActions] = useConfirmContext();
+  const [openLoginModal, setOpenLoginModal] = useState(false);
 
   // 메인 브랜드 로고 리스트, 장바구니(TODO..) 데이터 조회 api
-  const { data, isSuccess, refetch } = useGetDefaultData(
+  const { data, isSuccess, refetch } = memberApi.useGetDefaultData(
     user?.custmrId || null
   );
 
@@ -56,37 +57,35 @@ export default function Home() {
     }
   }, [data]);
 
-  const handleBrandLogoClick = (path: string, brandPath: number) => {
-    console.log('a', path, typeof brandPath);
-    if (brandPath === 100000) {
-      // 전용몰 로그인 여부 체크
-      // - 로그인 하였을경우 해당 페이지로 이동
-      // - 로그인x -> 로그인 페이지로 이동
-      confirmActions
-        .open('알림', '로그인이 필요한 서비스입니다.로그인 하시겠습니까?', [
-          '취소',
-          '확인',
-        ])
-        .then(async (answer) => {
-          if (answer === '확인') {
-            router.push({
-              pathname: '/check-auth',
-              query: { pid: path, brandCd: brandPath },
-            });
-          }
-        });
-    } else {
-      router.push(`/goods/list/${path}?brandCd=${brandPath}`);
+  const handleBrandLogoClick = (path: string, brandPath: string) => {
+    if (brandPath === '100000' && !user?.isBrandLogin) {
+      setOpenLoginModal(true);
+      return;
     }
+    router.push(`/goods/list/${path}?brandCd=${brandPath}`);
   };
 
   return (
     <Container maxWidth="lg" disableGutters>
       <Box sx={styles.root}>
+        {/* FIXME: TEXT용 / 추후 삭제 */}
+        <WebView />
         <Box sx={styles.contentsRoot}>
           <Box sx={styles.brandSwiperRoot}>
             <BrandSwiper onClick={handleBrandLogoClick} data={category || []} />
           </Box>
+
+          {/* 이렇게 조건을 추가하면, true일때 새로 생성되기에 자동 initialized */}
+          {openLoginModal && (
+            <LoginModal
+              open={openLoginModal}
+              onClose={() => {
+                setOpenLoginModal(false);
+              }}
+              title="2단계 인증"
+              path={'/goods/list/101?brandCd=100000'}
+            />
+          )}
         </Box>
         <Box sx={styles.footerRoot}>
           <Footer />

@@ -14,10 +14,6 @@ type Props = {
 };
 const ResponsiveModal = (props: Props) => {
   const isFullScreen = !useMediaQuery('(min-width:800px)');
-  useEffect(() => {
-    console.log(isFullScreen);
-  }, [isFullScreen]);
-
   return (
     <Dialog
       maxWidth={false}

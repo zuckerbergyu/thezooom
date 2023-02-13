@@ -1,11 +1,11 @@
+import theme from 'constants/theme';
 export const styles = {
   root: {},
   addressRoot: {},
   submitAddressRoot: {
     padding: '16px 20px',
-    background: 'ellow',
-    borderTop: '1px solid #e8e8e8',
-    borderBottom: '1px solid #e8e8e8',
+    borderTop: `1px solid ${theme.palette.grey[300]}`,
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
   },
   submitAddressBtnRoot: {
     padding: '10px 0px',
@@ -14,7 +14,7 @@ export const styles = {
     textAlign: 'center',
     borderRadius: '4px',
     borderWidth: '1px',
-    borderColor: '#8a8a8a',
+    borderColor: theme.palette.grey[500],
     borderStyle: 'solid',
   },
   submitAddressTxt: { fontSize: '14px' },

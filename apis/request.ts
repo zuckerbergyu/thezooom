@@ -74,7 +74,14 @@ request.interceptors.response.use(
       console.log('최초 세팅 config.url === /api/member/sign');
       return response;
     }
-
+    // 실패시 token값이 null로 와서 추가
+    if (
+      response.config.url === '/api/login/joinCheck' ||
+      response.config.url === '/api/login/changePwd' // 이렇게  추가하면 안되
+    ) {
+      console.log('브랜드 로그인 config.url === ', response.config.url);
+      return response;
+    }
     if (
       typeof response.data.result === 'string' &&
       response.data.result === 'expiredError'
@@ -98,7 +105,6 @@ request.interceptors.response.use(
     return response;
   },
   (error) => {
-    // 로그인 오류시에는
     if (error.config.url === '/api/member/sign') return { data: null };
     return Promise.reject(error);
   }

@@ -1,3 +1,4 @@
+import theme, { Colors } from 'constants/theme';
 export const styles = {
   root: { marginBottom: '48px' },
   rowRoot: { marginBottom: '18px' },
@@ -33,7 +34,7 @@ export const styles = {
     width: '98px',
     height: '98px',
   },
-  noStockTxt: { color: 'white', fontSize: '32px' },
+  noStockTxt: { color: Colors.white, fontSize: '32px' },
 
   contentsRoot: {
     padding: 0,
@@ -43,7 +44,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    background: '#f5f6f9',
+    background: theme.palette.grey[100],
     borderRadius: '2px',
     width: 'fit-content',
     marginBottom: '4px',
@@ -78,7 +79,7 @@ export const styles = {
     alignItems: 'center',
   },
   salePercentage: {
-    color: 'red',
+    color: Colors.red,
     fontWeight: 600,
     fontSize: '14px',
     marginRight: '4px',
@@ -88,7 +89,7 @@ export const styles = {
     fontSzie: '14px',
   },
   price: {
-    color: 'gray',
+    color: theme.palette.grey[400],
     textDecoration: 'line-through',
     fontSize: '13px',
   },

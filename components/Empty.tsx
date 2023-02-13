@@ -2,7 +2,6 @@ import Stack from '@mui/material/Stack';
 import Text from '@mui/material/Typography';
 import { Colors } from 'constants/theme';
 import { SxProps, toArray } from 'libs/sx';
-import { BottomBarHeight } from 'constants/styles';
 
 type Props = {
   sx?: SxProps;

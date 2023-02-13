@@ -1,8 +1,9 @@
+import theme from 'constants/theme';
 export const styles = {
   root: {},
   divider: {
     width: '100%',
-    borderColor: '#e8e8e8',
+    borderColor: theme.palette.grey[300],
   },
   bodyRoot: {
     padding: '16px 20px',
@@ -15,5 +16,5 @@ export const styles = {
   bodyTitleRoot: { width: '100px' },
   bodyTitle: { fontSize: '15px', fontWeight: 600 },
   bodyContentRoot: { width: '100%' },
-  bodyContent: { fontSize: '15px', color: '#707070' },
+  bodyContent: { fontSize: '15px', color: theme.palette.grey[600] },
 };

@@ -42,6 +42,8 @@ const TextField = (props: Props) => {
             onChange={(e) => {
               props.onChange(e.target.value);
             }}
+            name="textField"
+            autoComplete="off"
             type={props.type}
           />
           {props.value.length > 0 && !props.disabled && !props.multiLine ? (

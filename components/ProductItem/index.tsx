@@ -32,7 +32,12 @@ const ProductItem = ({
 }: Props) => {
   return (
     <Card elevation={0} square sx={[styles.root, rowType && styles.rowRoot]}>
-      <Link href={`/goods/detail/${productItem.goodsSeq}`} passHref>
+      {/* <Link href={`/goods/detail/${productItem.goodsSeq}`} passHref> */}
+      <Link
+        href="/goods/detail/[id]?breadcrumb=true"
+        as={`/goods/detail/${productItem.goodsSeq}`}
+        // passHref
+      >
         <CardActionArea
           disableRipple
           component="a"
