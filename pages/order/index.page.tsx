@@ -22,11 +22,6 @@ import PaymentModal from './_comps/PaymentModal';
 import Agree from './_comps/Agree';
 import { styles } from './styles';
 
-// TODO: 주문 완료후 세션 orderList 처리
-// TODO: 배송비 데이터 확인
-// TODO: 휴대번호 정규식
-// TODO: 호버,포커싱 색상
-// TODO: 주문서 포인트
 const Order = () => {
   const router = useRouter();
   const [, confirmActions] = useConfirmContext();

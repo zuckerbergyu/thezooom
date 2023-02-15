@@ -1,4 +1,4 @@
-import theme, { Colors } from 'constants/theme';
+import theme from 'constants/theme';
 export const styles = {
   root: { padding: '16px 20px' },
   headerRoot: {

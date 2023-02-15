@@ -6,7 +6,7 @@ import TabItem from 'components/MainCategoryTab/TabItem';
 import { Category } from 'types';
 import { useRouter } from 'next/router';
 
-// TODO: 추후 사용 예정
+// TODO: 현재 사용x / 추후 사용 예정
 type Props = {
   sx?: SxProps;
   data: Pick<Category, 'catgryCd' | 'catgryNm'>[];

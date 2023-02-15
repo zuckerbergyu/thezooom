@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { Category } from 'types';
 import Divider from 'components/Divider';
 
-// TODO: 추후 사용 예정
+// TODO: 현재 사용x / 추후 사용 예정
 type Props = {
   sx?: SxProps;
   onClick?: (code?: string) => void;

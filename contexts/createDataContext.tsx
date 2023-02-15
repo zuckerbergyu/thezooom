@@ -40,7 +40,6 @@ const createDataContext = <
   const Provider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    // actions === { addBlogPost: (dispatch) => { return () => {} } }
     for (const key in actions) {
       boundActions[key] = actions[key](dispatch);
     }

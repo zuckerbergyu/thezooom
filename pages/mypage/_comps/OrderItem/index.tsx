@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -20,9 +19,7 @@ type Props = {
 };
 const OrderItem = ({ data }: Props) => {
   const router = useRouter();
-  console.log('orderItemt2 data : ', data);
   const goods = data.orderGoodsList;
-  console.log('orderItemt2 goods', goods);
 
   return (
     <Box sx={styles.root}>

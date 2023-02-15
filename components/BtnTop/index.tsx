@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { IconButton } from '@mui/material';

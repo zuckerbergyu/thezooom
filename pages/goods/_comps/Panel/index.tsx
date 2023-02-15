@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { styles } from './styles';
 import { SxProps } from 'libs/sx';
+import { styles } from './styles';
 
 type Props = {
   sx?: SxProps;
@@ -18,7 +18,6 @@ const Panel = (props: Props) => {
         hidden={props.value !== props.index}
         id={`simple-tabpanel-${props.index}`}
         aria-labelledby={`simple-tab-${props.index}`}
-        // {...other}
       >
         {props.value === props.index && (
           <Box sx={{ p: 3 }}>

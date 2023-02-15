@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -19,7 +19,7 @@ import { useScrollRestoration } from 'libs/useScrollRestoration';
 import { User, StoreKey } from 'types';
 import theme, { Colors } from 'constants/theme';
 import { DEFAULT_SEO } from 'constants/seo';
-// global style 추가하기
+// TODO: global style 추가하기
 
 // swiper
 // 현재 'eslint-plugin-import'에서 swiperJs 7버전을 import 했을 때
@@ -70,7 +70,6 @@ const useUser = () => {
           if (router.pathname === '/not-authorized') return;
 
           // TODO 여기서 최초로 호출하고, 그다음 부터는 호출 하지 않는다.
-          console.log('user정보 없다면, api 호출');
           (async () => {
             // TODO: 실제 운영에선 아래 사용
             // const isProd = process.env.NEXT_PUBLIC_APP_ENV === 'PROD';

@@ -7,7 +7,6 @@ import BrandSwiper from 'components/BrandSwiper';
 import Footer from 'components/Layout/Footer';
 import LoginModal from 'components/LoginModal';
 import { StoreKey, Category } from 'types';
-import WebView from 'components/WebView';
 
 export default function Home() {
   const router = useRouter();
@@ -68,8 +67,6 @@ export default function Home() {
   return (
     <Container maxWidth="lg" disableGutters>
       <Box sx={styles.root}>
-        {/* FIXME: TEXT용 / 추후 삭제 */}
-        <WebView />
         <Box sx={styles.contentsRoot}>
           <Box sx={styles.brandSwiperRoot}>
             <BrandSwiper onClick={handleBrandLogoClick} data={category || []} />

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box } from '@mui/material';
 import { useUserContext } from 'contexts/User';
@@ -29,7 +29,6 @@ const GoodsList = () => {
   const [subCategoryList, setSubCategoryList] = useState<SubCategoryTabType>(
     []
   );
-  console.log(subCategoryList);
 
   const categoryCode =
     router.isReady && router.query.id ? Number(router.query.id) : null;
@@ -51,7 +50,7 @@ const GoodsList = () => {
   }, [brandCode]);
 
   // 상품 리스트 조회 api
-  const { data, refetch, fetchNextPage, hasNextPage, isFetching } =
+  const { data, fetchNextPage, hasNextPage, isFetching } =
     goodsApi.useProductInfiniteList(categoryCode, brandCode, sort);
 
   // 서브 카테고리 처리
@@ -69,7 +68,6 @@ const GoodsList = () => {
         categoryList?.filter((item) => item.catgryCd === String(categoryCode))
           .length === 0;
 
-      // if (!isSubCategory || subCategoryList.length === 0) {
       categoryList.map((item) => {
         if (
           item.catgryCd ===
@@ -92,7 +90,6 @@ const GoodsList = () => {
         }
       });
       setSubCategoryList(list);
-      // }
       setSort(0);
     }
   }, [categoryCode]);
@@ -140,7 +137,6 @@ const GoodsList = () => {
       }
 
       // 상품상세에서 사용하기위해 임시 세션에 저장
-      // 추후 전체적으로 사용시 context로 교체
       sessionStorage.setItem(StoreKey.BREADCRUMB, JSON.stringify(list));
       return list;
     }

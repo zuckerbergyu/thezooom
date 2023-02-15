@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import request from 'apis/request';
 
 export interface LoginParams {
-  memId: string; // TODO: 삭제예정
+  memId: string;
   custmrId: string | undefined;
 }
 

@@ -21,7 +21,6 @@ type Props = {
   totalCount: number;
 };
 const ProductGridHeader = ({ totalCount, value, setValue, sx }: Props) => {
-  // const [selectedIndex, setSelectedIndex] = useState(value);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = Boolean(anchorEl);
@@ -30,6 +29,7 @@ const ProductGridHeader = ({ totalCount, value, setValue, sx }: Props) => {
   const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   // 메뉴 닫기
   const handleClose = () => {
     setAnchorEl(null);

@@ -1,6 +1,6 @@
 import { useQuery, useInfiniteQuery } from 'react-query';
-import request from 'apis/request';
 import { getFromTo } from 'libs/pageHelper';
+import request from 'apis/request';
 
 // 상품 리스트 api
 export const getProductList = async ({
@@ -64,9 +64,7 @@ export function useProductInfiniteList(
       }),
     {
       enabled: true,
-      // enabled: Boolean(categoryCode && brandCode),
       refetchOnWindowFocus: false,
-      // keepPreviousData: true, // 확인 필요
       getNextPageParam: (lastPage) => {
         return lastPage.isLast ? undefined : lastPage.pageParam + 1;
       },

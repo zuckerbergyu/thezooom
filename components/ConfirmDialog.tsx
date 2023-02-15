@@ -6,13 +6,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import { ScreenWidth, ScreenMargin } from 'constants/styles';
 import { useContext as useConfirmContext } from '../contexts/confirm';
 
 export default function AlertDialog() {
   const [state, actions] = useConfirmContext();
   const [value, setValue] = useState('');
-  // const { t } = useLocalizationContext();
 
   useEffect(() => {
     if (state.isOpen) {

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Typography, ButtonBase } from '@mui/material';
 import { order as orderApi } from 'apis';

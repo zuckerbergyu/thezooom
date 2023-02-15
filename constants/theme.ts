@@ -1,4 +1,7 @@
 import { createTheme } from '@mui/material/styles';
+// 전체 테마
+// 정해진 ui가이드가 없어 더줌 로고 컬러를 메인으로 설정후 primary,secondary 색상 지정
+// TODO : 추후 가이드가 정해지면 수정
 
 // Create a theme instance.
 export const Colors = {

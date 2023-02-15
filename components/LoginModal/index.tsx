@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import { login as loginApi } from 'apis';

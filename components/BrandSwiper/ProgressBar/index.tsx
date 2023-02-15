@@ -14,7 +14,6 @@ const ProgressBar = (props: Props) => (
     activeStep={props.activeStep + 1}
     position="static"
     sx={styles.root}
-    // nextButton={null}
     backButton={null}
     nextButton={
       <Box sx={{ marginLeft: '12px', display: 'flex' }}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useContext as useConfirmContext } from 'contexts/confirm';
 import { member as memberApi } from 'apis';

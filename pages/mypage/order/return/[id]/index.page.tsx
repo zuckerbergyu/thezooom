@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Typography, ButtonBase } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useContext as useConfirmContext } from 'contexts/confirm';

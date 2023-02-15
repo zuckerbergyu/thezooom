@@ -18,7 +18,7 @@ const InfiniteScroll = <T,>(props: Props<T>) => {
   return (
     <Box sx={{ ...styles.root, ...props.sx }}>
       {props.ListHeaderComponent || null}
-      {/* FIXME: 이부분도 헤더처럼 밖에서 주입시키는것으로 변경하면 어떨지 고민해보기 */}
+      {/* TODO: 헤더와 같이 밖에서 주입 가능 / 쓰임새에따라 추후 수정 */}
       <ProductGrid productList={props.data} />
       {props.hasNextPage ? (
         <Observer

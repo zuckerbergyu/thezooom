@@ -74,6 +74,7 @@ const AddAddress = (props: Props) => {
     }
   }, [data]);
 
+  // TODO: libs로 분리
   const isPhoneNumber = (phoneNmuber: string) => {
     const regPhoneNumber = /^((01[0|1|6|7|8|9])[0-9]{7,8})$/;
     return new RegExp(regPhoneNumber).test(phoneNmuber);

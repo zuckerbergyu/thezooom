@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import { styles } from './styles';
 import { SxProps } from 'libs/sx';

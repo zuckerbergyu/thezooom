@@ -1,4 +1,4 @@
-import theme, { Colors } from 'constants/theme';
+import { Colors } from 'constants/theme';
 export const styles = {
   root: {},
   appBar: {

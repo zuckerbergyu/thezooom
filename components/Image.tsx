@@ -26,12 +26,11 @@ const Image = ({
   return (
     <img
       {...props}
-      // src={src || ''} // 없을때 이미지 추가
       src={err ? errImg : src || errImg}
       css={{
         width: layout === 'fill' ? '100%' : width,
         height: layout === 'fill' ? '100%' : height,
-        objectFit: objectFit || 'cover', //fill
+        objectFit: objectFit || 'cover', // cover/fill
       }}
       alt={alt}
     />

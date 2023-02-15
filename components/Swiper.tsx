@@ -40,15 +40,12 @@ const SwiperComponent = (props: Props) => {
           slidesPerView={1}
           loop={true}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 1800, disableOnInteraction: false }} // 추가
+          autoplay={{ delay: 1800, disableOnInteraction: false }}
         >
           {slides.map((slideContent, index) => (
             <SwiperSlide
               key={index}
-              // className={clsx(classes.slide, propClasses.slide)} // 스타일
-              //   className={{ height: 'auto' }} // 스타일
               onClick={props.onClick && (() => props.onClick?.(index))}
-              // {...props.swiperSlideProps}
             >
               {slideContent}
             </SwiperSlide>

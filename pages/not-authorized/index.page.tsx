@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { Box, ButtonBase, Typography } from '@mui/material';
 import Image from 'components/Image';
 import { styles } from './styles';

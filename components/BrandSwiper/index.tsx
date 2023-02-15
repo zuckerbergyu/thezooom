@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { SxProps } from 'libs/sx';

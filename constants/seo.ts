@@ -1,5 +1,6 @@
 import { TITLE, DEFAULT_TITLE, DESCRIPTION } from 'constants/meta';
 
+// TODO : 해당 어플리케이션 상황에 맞게 수정후 배포
 export const DEFAULT_SEO = {
   title: TITLE,
   defaultTitle: DEFAULT_TITLE,
@@ -38,7 +39,7 @@ export const DEFAULT_SEO = {
   },
 };
 
-// 이거는 굳이 필요하지 않을듯하다, 그냥 그때그때 만들어서 쓰는것으로 하기
+// FIXME: 꼭 필요하지 않음, 상황에 따라 삭제 및 사용여부 결정
 export const DETAIL_SEO = ({
   title,
   description,

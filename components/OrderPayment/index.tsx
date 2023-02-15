@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { SxProps } from 'libs/sx';
 import { styles } from './styles';

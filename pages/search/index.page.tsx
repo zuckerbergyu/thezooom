@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { goods as goodsApi } from 'apis';
 import SearchField from 'components/SearchField';
@@ -17,7 +17,7 @@ const Search = () => {
   const [sort, setSort] = useState(0);
 
   // 상품 리스트 조회 api
-  const { data, refetch, fetchNextPage, hasNextPage, isFetching, isFetched } =
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetched } =
     goodsApi.useSearchProductInfiniteList(keyword, sort);
 
   // 인피니티 스크롤을 위하여, 상품 리스트 합성
@@ -66,7 +66,6 @@ const Search = () => {
         onSubmit={(value) => {
           setSort(0);
           setKeyword(value);
-          // refetch();
         }}
         initialValue={keyword}
       />

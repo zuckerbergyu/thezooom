@@ -1,0 +1,32 @@
+export const deliveryList = {
+  resultCode: '0000',
+  list: [
+    {
+      reverTel: null,
+      rcvAddr: '서울 서초구 서초중앙로22길 87 (서초동)',
+      rcvAddrCode: '11650',
+      addrNick: null,
+      rcverNm: '이은종',
+      rcvAddrDetail: '4층',
+      memSeq: 100000000516,
+      dlvAddrSeq: 8207,
+      basicYn: 'Y',
+      rcvPost: '06632',
+      rcverHp: '01090413762',
+    },
+    {
+      reverTel: '',
+      rcvAddr: '서울 관악구 승방6길 10',
+      rcvAddrCode: '11620',
+      addrNick: '나의집',
+      rcverNm: '이세규',
+      rcvAddrDetail: '803호 택배함 비밀번호 6673',
+      memSeq: 100000000516,
+      dlvAddrSeq: 9053,
+      basicYn: 'N',
+      rcvPost: '08807',
+      rcverHp: '01022740450',
+    },
+  ],
+  resultMsg: '조회 성공',
+};

@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { Box, ButtonBase, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Divider from 'components/Divider';
 import { styles } from './styles';
 import Link from 'next/link';

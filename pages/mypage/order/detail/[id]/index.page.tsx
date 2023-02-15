@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Typography, ButtonBase } from '@mui/material';
+import { useMemo } from 'react';
+import { Box, Typography } from '@mui/material';
 import { styles } from './styles';
 import { useRouter } from 'next/router';
 import { order as orderApi } from 'apis';

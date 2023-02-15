@@ -1,4 +1,3 @@
-import React from 'react';
 import { SxProps } from 'libs/sx';
 import { Stack, Box, Typography, InputBase, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/CloseRounded';
@@ -19,7 +18,6 @@ type Props = {
 const TextField = (props: Props) => {
   return (
     <Stack sx={styles.root}>
-      {/* input label */}
       {props.label && (
         <Box sx={styles.labelRoot}>
           <Typography sx={styles.label}>{props.label}</Typography>
@@ -28,7 +26,6 @@ const TextField = (props: Props) => {
           )}
         </Box>
       )}
-      {/* input filed */}
       <Stack direction="row" sx={{ width: '100%' }}>
         <Box sx={styles.form}>
           <InputBase

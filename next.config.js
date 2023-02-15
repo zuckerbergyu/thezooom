@@ -32,8 +32,6 @@ module.exports = (phase) => {
   }
 
   const rewrites = () => {
-    console.log('CURRENT URL : ', HOST);
-    console.log('PROXY_URL : ', BACKEND_API);
     return {
       fallback: [
         {
@@ -43,6 +41,7 @@ module.exports = (phase) => {
       ],
     };
   };
+
   const redirects = () => {
     return [
       {
@@ -58,7 +57,6 @@ module.exports = (phase) => {
       // domains: ['domain image url'],
     },
     env,
-    // FIXME: server.js테스트위해 주석
     rewrites,
     redirects,
     generateBuildId: async () => {

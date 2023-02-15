@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Tabs, Tab } from '@mui/material';
 import { styles } from './styles';
 import { SxProps } from 'libs/sx';
@@ -16,7 +15,6 @@ const Menu = (props: Props) => {
         value={props.value}
         onChange={(_, index) => props.onSelect(index)}
         variant="fullWidth"
-        // indicatorColor="grey"
         sx={styles.tabs}
       >
         {props.tabLabels?.map((label, index) => {
